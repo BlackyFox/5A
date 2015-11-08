@@ -1,0 +1,10 @@
+\rhead{06/11/2015}
+\section{Scan de vulnérabilités}
+Commencer par lire le document sur les généralités des vulnérabilités (donne la culture des vulnérabilités).\\
+Ensuite, lire le document \textit{exploitation}. Cela s'appuie sur un seul scanner de vulnérabilités et montre son fonctionnement.\\
+\subsection{Question TP}
+Mode \textit{credential} : on rentre dans la machine directement pour faire l'audit. Pour les machines \textit{linux-like}, on utilise SSH. On crée aussi un compte pour OpenVAS afin de lui permettre de rentrer avec certains droits. On le configure en \textit{credential} afin qu'il puisse avoir accès aux vulnérabilités applicatives.\\
+Pour Windows, on va utiliser smb/spc pour faire du contrôle à distance. Dans OpenVAS on va trouver un module MSRPC.\\
+L'objectif de ce LAB est de scanner deux machines virtuelles : une sous Linux et une sous Windows. Il faut prouver que l'on soit rentré en mode \textit{credentials}.\\
+Prendre la machine, à neuf, scan. On met à jour, on re-scan.\\
+On peut aussi comparer avec une titan.

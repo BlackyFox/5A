@@ -1,0 +1,60 @@
+\section{Théorie de l'information}
+\subsection{Introduction}
+Historiquement, on l'appelle la théorie de Shannon. Deux textes originaux publiés en 1948 et 1949.\\
+Qu'est-ce que l'information ?\\
+L'incertitude  = l'effort qu'un attaquant doit fournir pour trouver une clé secrète.\\
+Il faut définir ce qu'est l'information et un système de mesure.\\
+L'information n'existe que quand elle passe sur un support (!= d'idée, concept). Le message passe ensuite par un transmetteur. On a ensuite le canal de communication (support). Dès qu'on a un support, la nature va pouvoir l'altérer. Il faut luter contre l'altération du support, donc de l'information.\\
+Pour la partie réception, il faut s'assurer que l'information reçue soit proche de celle émise, malgré le bruit incorporé par la nature.\\
+Ici, on se place dans le domaine de la sûreté : pas d'actions malveillantes.\\
+On parle de sécurité lorsque qu'il y a des actions malveillantes.
+On a 3 pb :
+Comment caractériser une chose
+Comment la transmettre
+Comment se prémunir des attaques malveillantes
+
+\begin{itemize}
+ \item L'information doit être représentée
+ \item Le concept d'incertitude est essentiel. On ne transmet pas qqch d'évident. L'information est alors incertaine.
+ \item Seulement une partie de l'information n'est pas prédictible
+\end{itemize}
+
+Pour passer de la tête au support, il nous faut des outils. Quand on veut représenter un message, on utilise des signaux et des symboles. Mais comment bien choisir ces symboles de manière économique (taille de l'info -> taille du disque, bande passante, etc\ldots). Selon les besoins, on ne va pas utiliser les même méthodes de stockage de l'information (binaire, hexadécimale, base dix, etc\ldots).\\
+On va retrouver deux types d'information : l'information utile et l'information parasite (le bruit).
+
+\subsection{L'incertitude}
+\subsubsection{Intoduction : }
+L'incertitude d'une variable aléatoire qui va prendre des valeurs $X_i$ avec des probabilités $p_i$ sera une fonction qui va définir uniquement des probabilités $p_i$. On note cette fonction $H(p_1, ..., p_n)$.\\
+On veut une incertitude max quand toutes les probas sont égales 'distribution équiprobable).\\
+Pour toutes permutation, l'entropie reste la même.\\
+Dès qu'on à un espace plus grand, l'incertitude est plus grande.\\
+Continue et concave : toute variation infime ne provoquera pas de grande variation sur la fonction.\\
+On peut \enquote{sommer} les événements.\\
+Dans le théorème de H, $\lambda$ est souvent égal à 1.\\~\\
+\textbf{Vérifier que H valide les axiomes et trouver l'entropie de l'AES $\rightarrow$ res = 11}\\
+\textbf{Touver un couple $(p_1, p_2) \in [0;1]^2$ ayant une entropie de 0.75. Dessiner la courbe d'entropie.}
+\textbf{Soit, A et B deux événements indépendants de distribution $P_1$ et $P_2$. Soit $P_3 = P_1 * P_2$ le produit direct de $P_1$ et $P_2$.\\$P_3 = {P_i * P_j / P_i \in P_1 ; P_j \in P_2}$.\\Montrer que $H(P_3)=H(P_1)*H(P_2)$}.
+\textbf{Dire si les point A, B et C (slide 2) sont vrais ou non avec preuves.}
+
+\subsection{L'entropie et ses propriétés}
+
+On prend ici un vecteur de variables aléatoires (finies et dénombrables).\\
+$H(X)$ est l'entropie conjointe.\\
+Le premier théorème donne une borne supérieure au l'entropie.\\
+\textbf{Démontrer ça (dérivée au dessus du log, fonction concave)}\\
+Le second théorème donne que l'entropie conjointe est inférieure ou égale au produit des entropies. Dans le cas de variables indépendantes, la probabilité conjointe est égale à a somme des entropies.
+
+\subsection{L'entropie conditionnelle}
+
+Entropie conditionnelle rejoint la probabilité conditionnelle.\\
+L'entropie conditionnelle est alors l'entropie de X sachant que A c'est déjà réalisé est de la forme : $H(X|A)=-\sum_{i=1}^{n}p_i.log(p_i)$\\
+\textbf{Quelle est l'incertitude résiduelle de ce message capturé : DFDJ FTU VO NFTT BHF TFDSFU}\\
+$H(X|Y)$ est l'incertitude de X après avoir observé Y.\\
+\textbf{Démontrer que $H(X|Y)=H(X)$ lorsque X et Y sont indépendants}\\
+Théorème \enquote{chain rule} : $H(X|Y) = H(X) + H(X|Y) = H(Y) + H(Y|X)$
+
+\subsection{Mesure de l'information}
+
+\textbf{Montrer que pour tout X, on a $H(X^2|X)=0$ mais donner un exemple pour montrer que $H(X|X^2)$ ne vaut pas 0.}
+
+\subsection{Conclusion}

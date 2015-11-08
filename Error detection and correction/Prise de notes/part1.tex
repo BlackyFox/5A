@@ -1,0 +1,45 @@
+\rhead{21/09/2015}
+\section{Introduction : Natural Languages as Mathematical Sources}
+Les langues naturelles sont très redondantes.\\
+Voir stylométrie.\\
+La plupart des logiciels conçut pour casser des mdp ne prennet pas en compte les accents.\\
+L'approximation d'ordre 0 est bien, mais pas suffisante.\\
+L'approximation d'ordre 1 tiens compte de la fréquence des lettres, on est alors plus précis.\\
+L'approximation d'ordre 2 va alors faire des bigrammes : par exemple, en français, la lettre \enquote{q} et la lettre \enquote{u} sont quasiment tout le temps ensemble.\\
+A environ $n=5$, on a alors une très bonne approximation de la langue.\\
+\textbf{Slide 7 $\rightarrow$ TODO}\\
+En prenant des mots dépendant des uns des autres, on gagne en qualité du texte.\\
+\subsection{The entropy of English}
+\subsubsection{A first approximation}
+On veut évaluer l'entropie de l'anglais $H_{E}$.\\
+En utilisant le théorème de Shannon-McMillan (sur les sources ergodiques), on peut interpréter $H_E$ en utilisant la formule suivante : $2^{nH_{E}}\approx t(n)$\\
+\subsection{Zipf law and word entropy}
+\subsubsection{Introduction}
+Shannon regardait la fréquence relative aux mots.\\
+La formule $H_E=\frac{H_W}{l(w)}$ n'est pas très précis. On a ici un formule qui est plus une approximation d'ordre 1.\\
+\subsubsection{Loi de Zipf}
+La probabilité d'occurence d'un mots dans un langage commence de manière très forte et descend rapidement.\\
+Si $p_n$ est la proba du mot $n$, elle est alors égale à $\frac{1}{n}$
+\subsection{Language redundancy}
+La compression de données consiste à réécrire les données avec un compte compact. Donc avant la compression, il faut connaître de langage pour connaître quelle information est redondante.\\
+La redondance $R$ du langage c'est ne nombre de bits utilisés pour envoyés le message moins le nombre de bits actuels du message.\\
+Ainsi, la redondance est un pourcentage. On peut alors facilement écrire $l(n)\approx n(1-\frac{R}{100})$.\\
+On peut voir (c.f. slide 25) que la redondance est liée au corpus (par niveau de langue) du texte. Dans l'exemple, on peut voir que la Bible a une redondance estimée à $41.4\%$ tandis qu'un magasine littéraire tel que \textit{The Atlantic Monthy} a une redondance estimée à $28.5\%$.\\
+Il y a aussi une différence au sein des langues.\\
+\textbf{Slide 27 $\rightarrow$ à vérifier avec les formules}\\
+Il n'est pas systématiquement possible de comprendre un texte si $\frac{1}{4}$ des lettres sont enlevées. Cela dépend du quart des lettres qui sont enlevées. On ne doit pas le faire n'importe comment.\\
+Avant de chiffre il est bon de compresser\\
+\subsection{Conclusion}
+La redondance est comprise entre $0.5$ et $0.75$.\\
+L'entropie est comprise entre $1.19$ et $2.38$.\\
+Il faut avoir la notion de corpus. Chaque langage est modelé en fonction du corpus.\\
+\subsection{Plus}
+Pour faire des essais, aller sur le projet Gutenberg.
+\subsection{Moodle}
+\subsubsection{Question 1}
+\begin{math}
+\forall p_1; P(p_1)=\frac{1}{27}\\
+P(<space>)=\frac{1}{27}\\
+Donc un mot est compose de 26 caracteres. On a alors :\\
+l(w)=26
+\end{math}

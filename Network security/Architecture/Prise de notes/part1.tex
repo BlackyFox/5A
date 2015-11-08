@@ -1,0 +1,87 @@
+\rhead{06/10/2015}
+\section{Introduction}
+Différents scénarios pour un début d'attaque :
+\begin{itemize}
+ \item Scan de ports en TCP. C'est bruyant.
+ \item Scan de port en UDP. Sur le DNS, on envoie et on attend une réponse. En UDP, c'est plus long, bruyant, et moins fiable.
+ \item On peut collecter de l'information en continue pour connaître ce qu'on a en face.
+ \item On va alors chercher des vulnérabilités sur cette version ou pousser la machine à la limite de la faute. La recherche de vulnérabilité reste quelque chose de bruyant puisqu'on va communiquer avec la machine.
+ \item La dernière étape est d'utiliser la faille. Cela va pouvoir être de rester dans la machine de manière durable, créer des utilisateurs, ou autre.
+\end{itemize}
+Tout cela va, en partie, être arrêté par le pare-feu. Ce dernier est présent sur les couches 3 et 4 du modèle OSI. Sur les autres couches, il sera presque aveugle.
+
+\section{Rappels de réseau}
+Un réseau c'est un ensemble d'objets inter-connecté qui s'échangent des information en utilisant des supports (WIFI, Ethernet, etc\ldots) et des règles communes, les protocoles.\\
+La grande différence entre les supports filaires et d'ondes est que l'on va plus retarder les personnes d'arriver jusqu'au câble. Pour cela, on va mettre de la sécurité physique (alarmes, sécurisation biométriques, etc\ldots). Un attaquant motivé pourra toujours récupérer de l'information que cela soit câblé ou modulaire. Si une personne arrive au support, physiquement, on va considérer que l'attaquant à déjà gagné.\\
+Pour les ondes, si cela \enquote{bave} à l'extérieur, il va pouvoir :
+\begin{itemize}
+ \item Récupérer des informations, analyser le réseau, les communications, etc\ldots
+ \item Brouiller le signal pour le rendre inopérant. Cela a des fins autres (passer sur un support de secours, empêcher la transmission de messages, etc\ldots).\\Pour se protéger du brouillage, on peut :
+ \begin{itemize}
+  \item Théoriquement, mettre en place un système de cage de Faraday
+  \item Changer de fréquence de transmission
+  \item Passer sur un système filaire
+  \item Chercher la source du brouillage pour l'arrêter
+ \end{itemize}
+\end{itemize}
+Les protocoles sont des règles libres. Tout le monde peut y accéder (contrairement aux règles fermées, propriétaires). C'est un avantage dans la sécurité car il est possible de l'étudier et ainsi de corriger dans certains cas ou de se prémunir des failles. C'est aussi un avantage car l'attaquant va lui aussi connaître le protocole et ses failles.\\
+Ici, nous allons nous concentrer sur l'IPv4. On va alors désactiver l'IPv6 pour ne pas permettre à l'attaquant de rentrer via ce protocole.
+\subsection{Adresse MAC}
+Identifiant unique, théoriquement.\\
+Dans une trame Ethernet, on va retrouver l'adresse MAC. Avec dans les 3 premier octets le fabriquant de la carte. Attention, il faut se méfier de ces octets. Ils peuvent être changer et ainsi ne plus être vrais.\\
+A la fin de la trame Ethernet, on va retrouver une signature, le \textit{checksum} qui va nous permettre de connaître l'intégrité de l'information.
+\subsection{Modèle OSI}
+ICMP va permettrede faire communiquer entre eux les équipements sur la couche 3. Cela permet aussi de diagnostiquer l'état du réseau. Sur les réseaux militaires, tout ICMP est interdit. Dans certains cas, on va vouloir un filtrage plus fin afin de laisser passer certains ICMP dans un sens et certains autres dans l'autre.\\
+Un pare-feu doit prendre des décisions rapide depuis des règles simple. C'est un fonctionnement assez brutal. On va lui donner des règles sur les couches 3 et 4 :\\
+Si le flux vient de l'entreprise vers un serveur externe valide, on va regarder quel protocole (couche 4) est utilisé. Si c'est du TCP ayant en port de destination le port 80 et en port source un port supérieur à 1024, alors on vient de valider un flux web. Il suffit alors de créer la règle de retour.\\
+Dans la partie application du modèle OSI, on va retrouver plus de failles. Il y a plus d'intelligence, des protocoles plus lisibles (SMTP). Si c'est plus lisible, c'est qu'il y a plus de code, donc plus de chance d'avoir des erreurs dans le code. Un proxy SMTP va avoir besoin de plus de ressource pour plus de finesse.\\
+On va retrouver \textit{iptable} pour faire du filtre d'adresse IP et \textit{ebtable} pour faire des filtres d'adresse MAC.\\
+Un Firewall vendu par un industriel va être un ensemble de proxy et filtres.\\
+L'échange à 3 passes (3 way handshake) est quelque chose que l'on doit connaître pour la mise en place d'un proxy TCP. Il faut que le proxy puisse accepter le SYN du client, le SYN, ACK du serveur, etc\ldots\\
+En cas de RESET du serveur, c'est qu'il n'y a aucune application écoutant sur ce port. Ainsi, il est bon de bloquer le RESET sur le pare-feu afin de ne pas donner de l'information à l'attaquant.\\
+Le mode dynamique d'un protocole n'est pas très simple pour le pare-feu. En effet, en FTP par exemple, le serveur va demander l'ouverture d'un port aléatoire. Un pare-feu bloquant alors les ports lointains, l'accès échouera. Il faut donc que le pare-feu puisse lire les flux FTP afin d'ouvrir un accès temporaire sur le port en question.\\
+Le DNS est une table de correspondance entre le nom de domaine et les adresses IP. Les CNAME\footnote{Cannonical Name} sont des alias. Un relais de messagerie MX\footnote{Mail eXchanger} permet de donner l'adresse du serveur mail.\\
+\section{Définitions}
+\begin{description}
+ \item[Pare-feu] Un pare-feu est un élément ou un ensemble d'éléments placé(s) entre deux réseaux et suivant les règles suivantes :
+\begin{itemize}
+ \item Tous les flux réseaux passent par là.
+ \item Seuls les flux autorisés par une politique locale peuvent passer. Cela correspond à :
+ \begin{itemize}
+  \item J'interdis tout sauf certains flux (whitelist).
+  \item J'autorise tout sauf certains protocoles (blacklist).
+ \end{itemize}
+ \item Le système en lui même doit-être résistant aux attaques(c.f. GRSecurity). Pour cela, on va pouvoir :
+ \begin{itemize}
+  \item On va bloquer tout ce qui vient directement sur la machine.
+  \item On va bloquer tout ce qui permet de contrôler la machine (SSH)
+  \item On peut mentir sur la machine en elle-même. Cependant, il faut faire très attention et le faire partout pour être crédible.
+  \item On enlève toutes les applications inutiles (interface graphique, gestion de l'IPv6, etc\ldots). On enlève le maximum de chose jusqu'à la recompilation du noyau.
+ \end{itemize}
+\end{itemize}
+\item[Un bastion] Un bastion est un pare-feu très sécurisé car il est le premier à faire face à l'extérieur, l'inconnu. Il ne faut pas que ça compromission compromette les autres pare-feux.
+\item[Principe de moindre privilège] cela consiste à ne donner que les droits nécessaire à notre utilisateur.
+\item[Principe de défense en profondeur] On ne fait pas confiance qu'à une seule ligne de défense. Il faut multpliser les défense. On peut aussi mettre en place des IDS, etc\ldots
+\item[Un goulet d'étranglement] Cela va permettre d'analyser tout ce qui passe car tous les flux passent par la. On peu en avoir plusieurs pour ne pas avoir des \enquote{bouchons}.
+\item[Le maillon faible] C'est l'élément qui met le plus en danger le système. Par exemple, l'humain est le plus grand maillon faible. Chez l'humain, un administrateur pensant savoir est une grande faille.
+\item[La panne sans danger] Cela va être le cas permettant de savoir si le système fonctionnel fonctionne toujours suite à une coupure de courant ou autre.
+\item[Diversité des défenses] On va mettre un second pare-feu, mais de famille différente pour ne pas subir une faille deux fois.
+\item[KISS\footnote{Keep It Simple Stupid}] On garde le système simple. Il ne faut pas empiler les structures.
+\end{description}
+~\\
+Régulièrement, il faut réévaluer la politique de sécurité et réaliser des audits de la sécurité en place. Il faut aussi documenter  la solution pour pouvoir évaluer le produit.\\
+Quand quelque chose traverse la machine (la passerelle), on utilise le Forward. INPUT et OUTPUT c'est le pare-feu lui-même.\\
+\begin{description}
+ \item[-i] carte par laquelle ça rentrer
+ \item[-o] carte par laquelle ça sort
+ \item[-s] adresse IP source
+ \item[-d] adresse de destination
+ \item[-p] protocole
+ \item[--sport] port source
+ \item[--dport] port de destination
+ \item[-m] module
+\end{description}
+Afin de changer la politique d'INPUT ou OUTPUT ou FORWARD, il faut utiliser la commande :
+\begin{lstlisting}
+ iptables -P INPUT DROP
+\end{lstlisting}

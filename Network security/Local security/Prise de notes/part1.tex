@@ -1,0 +1,77 @@
+\section{Introduction}
+Être compétant c'est savoir appliquer les notions, le savoir, les compétences.\\
+Être professionnel c'est être capable de mettre en œuvre ses compétences à un instant T durant une durée donnée plus le relationnel.
+\subsection{Plan du cours}
+\subsection{Fonctionnement des labs}
+VM avec un simulateur de réseau français, \textit{Marionnette}. La syntaxe est \enquote{à la \textit{CISCO}}.
+
+\section{Rappels de réseaux}
+Taille de la trame Ethernet : 1500 octet. Ethernet est normée par IEEE.\\
+Au dessus du niveau Ethernet, on retrouve la norme IP. Elle a un taille max de 65Ko.\\
+TCP va être en charge de la découpe des paquets IP.\\
+TCP demande à la carte quel est son MTU\footnote{Taille max que la carte réseau} puis il fait des segments dont la taille correspond au plus petit paquet. Il calcule par rapport à la taille des en-têtes qui vont être rajouter à la fin.\\
+La trame Ethernet va avoir une partie qu'on ne peut pas voir en exécutant un analyseur logiciel, on va retrouver (en vert sur le schéma) des partie que seule a carte réseau va utiliser : une initialisation de l'horloge de la carte en fonction de l'horloge de la trame, jusqu'à un checksum.\\
+Pour connaître de quel type d'équipement vient l'adresse MAC, on peut utiliser des \textit{MAC manufacturer}.\\
+Chaque constructeur a un code constructeur composé de 3 octets.\\
+Adresse MAC de destination en premier car ça permet de ne pas avoir à attendre de lire la trame pour pouvoir commuter le plus rapidement possible.\\
+On met le $R_x$ sur le $T_x$ de l'autre.\\
+Un routeur est ordinateur avec deux cartes réseaux. Donc il faut un câble croisé entre les deux PC ou alors mettre un switch entre les deux pour que ce dernier croise en interne.\\
+Auto négociation MDIX : la carte réseau sonde pour savoir si le câble est croisé ou pas. Si ce n'est pas le cas, la carte croise d'elle même. Le problème c'est que ça prend du temps tout le temps.
+\subsection{Câbles}
+Blindage (shield) $!=$ d'écrantage (folded).
+Ecrantage = protection des parasites basse fréquence $< 3000Hz$.\\
+Blindage (on tresse autour du câble) = protection des parasites hautes fréquences de rentrer et empêche le signal de sortir du câble.\\
+Extérieur blindé (shield) et chaque paire est écrantée (folded) est le meilleur rapport qualité.\\
+Entre deux équipement réseaux, il ne faut pas dépasser 100m. Sinon le réseau n'est plus assuré.
+\subsection{Les offres Ethernet}
+Fast Ethernet = ???\\
+Giga Ethernet = Gigabit\\
+10 Giga Ethernet = 10 Gigabit
+\subsection{Matériel}
+\subsubsection{Hub}
+C'est un répéteur.\\
+Pour ne pas que tout le monde ne parle pas en même temps, on a une norme (???). Elle va permettre de mesurer le voltage pour voir s'il est supérieur à celui qu'on envoie. Si c'est le cas c'est que quelqu'un d'autre à parlé. On arrête la transmission. Une durée de temporisation est alors choisie aléatoirement avant de relancer le message.\\
+Hub, acces point, bluetooth c'est de l'half-duplex.
+\subsubsection{Switch}
+C'est du full-duplex.\\
+Pas de collision car auto-commutés par le switch.\\
+Pas de norme car personne ne s'est mis d'accord.\\
+Combien de switch peut-on mettre en casaque ? Entre deux switchs, pas plus de 100m déjà. On ne doit pas dépasser 3 bonds (hop). On prend une topologie en étoile. Il faut réduire le nombre de bonds pour augmenter la vitesse de transmission.\\
+Fonctionnement interne du switch :
+\subsubsection{VLAN}
+Sert à cloisonner le réseau local sans avoir à dépenser beaucoup de switchs. On va alors indiquer au switch principal sur quelles VLAN sont les machines qu'il connaît.\\
+Les VLAN sont à concevoir intelligemment.\\
+$802.1q$ 
+\subsubsection{IP/Ethernet}
+Quelle est la différence entre le broadcast et le multicast MAC ?\\
+De 224 à 255, c'est des adresses de multicast IP. Le multicast IP c'est envoyer en continu le/les flux à tous les utilisateurs. Les utilisateurs se calent ensuite sur un des flux.
+\section{Le switch}
+Une matrice de commutation = une connexion à l'instant T. Le maximum c'est le $\frac{nombre~de~ports}{2}$ matrices.\\
+Pour améliorer les performances d'un switch, on va pouvoir faire du \textit{switch trunking}. On fait de deux switch un seul. Cela va permettre d'augmenter le nombre de ports ou de faire de la redondance.\\
+On peut aussi mirrorer un port. Cela va permettre d'avoir un accès à un autre port pour faire de l'audit.\\
+En sécurité, on va pouvoir réaliser certaines choses :
+\begin{itemize}
+ \item Désactiver les ports qui ne sont et ne seront pas utilisées
+ \item faire du MAC learning : Lors du premier branchement, on apprend l'adresse MAC et on bloque sur celle la. On ne pourra pas recevoir des messages d'autres adresses MAC. On pourra aussi lever des trappes SNMP afin de relever une intrusion.
+\end{itemize}
+Un commutateur c'est un HUB à mémoire. Cette mémoire est appelée la \textit{CAM Table}.\\
+In va avoir l'\textit{aging time} aka le temps d'usure d'une adresse MAC. On fixe cette valeur. Durant cette durée, si l'adresse MAC n'a pas été vue, le switch va alors l'oublier de sa mémoire.\\
+Les prises backbone vont permettre de faire une architechture en étoile.\\
+Mode de Fonctionnement normal d'un switch bas de gamme : \textit{Store and forward}. Cependant, prend du temps car on fait une vérification du CRC de la trame.\\
+Un switch plus intelligent va envoyer et chercher des erreurs aléatoirement. Si le switch détecte une erreur il passe alors en \textit{store and forward}.
+\section{VLAN}
+On veut cloisonner dans un seul ou peu d'équipement réseaux.\\
+\subsection{VLAN de niveau 1}
+Dans la couche 1 du modèle OSI. C'est un filtre par ports. Les ports mis dans le VLAN1 n'auront pas accès aux autres VLAN des autres ports.\\
+On ne peut pas alors pas bouger, pas de mobilité. C'est quelque-chose de figé.
+\subsection{VLAN d3 niveau 2}
+On va pouvoir faire de l'adressage dynamique. On va alors choisir les VLAN en fonction de l'adresse MAC. Quand le switch rencontre une adresse MAC qu'il connaît, il la positionne dans son bon VLAN.\\
+Cependant, il faut rentrer les adresse MAC à la main, ce qui est long.
+\subsection{VLAN de niveau 3}
+Les machines ne vont pas utiliser les mêmes protocoles. Elles ne vont pas pouvoir communiquer entre elles. Par exemple, deux Russes dans une salle vont discuter entre eux. Les français ne vont pas discuter avec eux car ils ne parlent pas Russes.\\
+La norme $802.1Q$ va pouvoir permettre de tagger la trame. La partie du tag la plus utilisé est le VLAN ID. Le champs tagué est utilisé entre deux ports particuliers entre deux ports \textit{TAG} des deux switchs.\\
+Pour un serveur qui doit être joignable par plusieurs VLAN, on peut :
+\begin{itemize}
+ \item mettre ce serveur dans tous les VLAN
+ \item faire un lien tagué jusqu'à ce serveur. Le tag comprend les VLAN de ceux qu'il devra tester (c.f. \textit{router on the stick}).
+\end{itemize}

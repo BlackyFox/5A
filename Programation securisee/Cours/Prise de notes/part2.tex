@@ -1,0 +1,6 @@
+\rhead{16 sept 2015}
+\section{...}
+L'option de compilation \textit{/NXCOMPAT} sa spécifier qu'à chaque emplacement mémoire du programme ne sera pas exécutable.\\
+Avec l'\textit{ASLR}, pour que l'on soit sur d'avoir toujours à peu près les variables dans le même espace, on va remplir la mémoire jusqu'à laisser un seul espace mémoire pour le programme cible. Ainsi, le programme se lancera toujours dans le même espace mémoire. On pourra ainsi retrouver les adresses de manière plus simple.\\
+Pour analyser le code source : flawFinder, Coverity. Difficile d'en trouver en libre qui fonctionnent bien. Pour les payant, il faut en général envoyer le code source quelque part, ce qui n'est pas forcément adéquat par rapport à la propriété intellectuel.\\
+calloc = malloc + memset\\

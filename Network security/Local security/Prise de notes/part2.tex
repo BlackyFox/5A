@@ -1,0 +1,51 @@
+\section{Protocol SMB}
+SMB vient de IBM NETBIOS et à été repris et modifié par Microsoft.\\
+Il est dédié uniquement aux réseaux LAN car les paquets font environ 50 octets. Cela va permettre d'être super réactif sur les LAN. Sur un WAN ça ne va pas fonctionner d'une bonne manière car les petits paquets vont surcharger les routeurs. Les prestataires (opérateurs) vont alors bloquer le protocole.\\
+Le projet de portage de SMB sur Linux s'appelle SAMBA.\\
+Le nom de SMB est aussi cifs.
+\newpage
+\section{Infrastructure du réseau Internet}
+Cloud computing :
+\begin{itemize}
+ \item IaaS = Achat de machines physique. Plus cher mais plus libre.
+ \item PaaS = Achat d'un VM. On peut mettre l'OS que l'on veut mais on n'a pas l'infirmation du serveur.
+ \item SaaS = Achat d'un service uniquement.
+\end{itemize}
+SDNL = débit montant = débit descendant\\
+FTTH/FTTB = fibre.\\
+Opérateurs satellitaires (hors de la législation Française)\\
+Comment sécuriser un réseau d'entreprise comprenant un réseau non classifié (Internet) et un réseau confidentiel ?
+\begin{enumerate}
+ \item Les 2 réseaux sont séparés physiquement. Même pas de VLAN. Les deux réseaux n'ont aucuns lien.
+ \item Pour le réseau NP, on va mettre une sécurité (firewall)
+ \item Mise en place d'une station blanche pour transférer des données du NP au P.
+ \item Mise en place d'un DHCP snooping pour sécuriser le DHCP. Il va permettre en configurant le switch, de lui dire sur quels ports doivent aller les réponse DHCP (sur le port du serveur DHCP). Il faut alors un switch intelligent pour qu'il puisse aller sur la couche IP.
+ \item Chiffrer les Wi-Fi avec des clés primaires simples.
+ \item Limiter la puissance du Wi-Fi pour ne pas rayonner la où on n'en à pas besoin.
+ \item Cacher le SSID pour le réseau d'entreprise (visible pour le guest)
+\end{enumerate}
+Vulnerabilités du DHCP : 
+\begin{itemize}
+ \item DDoS : on fait des requêtes jusqu'à que le DHCP n'aura plus d'adresses disponibles.
+ \item Faire un serveur DHCP autre qui répondra plus rapidement que le vrai. Ainsi, les machines vont passer par le faux serveur DHCP.
+\end{itemize}
+\subsection{Obligations légales}
+Toute personne physique ou morale qui propose un accès aux services de communication ou au stockage, au public, doivent conserver toutes les infos permettant d'identifier toutes les infos (dates, durée, identité; \ldots) des utilisateurs.\\
+La CNIL dit qu'un utilisateur est composé d'un nom et un prénom.\\
+Il faut mettre en place un NAC\footnote{\textit{Network Access Derivation}}. On le place en coupure (pas en dérivation, si lui tombe, tout le réseau tombe pour pas qu'il loupe des informations).\\
+Trois solutions : 
+\begin{itemize}
+ \item Louer un produit qui fait cela (il faut que ça soit écrit sur le contrat)
+ \item Acheter une Appliance\footnote{OS modifié pour une application particulière puis monté} (Utopia, StormShield, DSCbox, etc\ldots)\\Il faut contrôler la solution pour être sur que cela fonctionne correctement !
+ \item Réaliser la solution en interne.\\Il faut aussi contrôler ! Soit par le RSSI soit par un audit externe.
+\end{itemize}
+Pour le contrôle, 
+\begin{itemize}
+  \item Il faut tout loguer, tous les ports ! Que ça soit de l'IRC, de la VoIP, du HTTP, etc\ldots
+\end{itemize}
+Autres NAC :
+\begin{itemize}
+ \item IPCOP
+ \item PFSense
+\end{itemize}
+Le problème des NAC \enquote{génériques} sont qu(ils vont logguer de manière simpliste. Il faut, pour la loi française pouvoir associer une personne à un moment donné.

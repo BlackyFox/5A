@@ -1,0 +1,40 @@
+\rhead{14/10/2015}
+\section{Codes de Reed Muller - Décodage par Fast Fourier Transform (FFT)}
+On prend comme ensemble de base un sous-espace vectoriel de dimension $dim(E)=2^n$ : $E=\mathbb{F}_2^{2^n}$. On a ici un code linéaire. Et $A$ est l'ensemble des fonctions $\mathbb{F}_2$ affines.\\
+On pose $f(x)_{x\in\mathbb{F}_2^n}=<u,x>+1$.\\
+Les codes de Reed Muller c'est l'ensemble des fonctions affines. Ainsi, le code de Reed Muller est noté de la manière suivante :
+\begin{equation}
+ R(1,n)=\left\{f(n), x\in\mathbb{F}_2^n, f(n)=<A,x>+a, A\in\mathbb{F}_2^n, a\in\mathbb{F}_2^n \right\}
+\end{equation}
+\subsection{Codage}
+Soit $w$ un mot de code de taille $n+1$ que l'on souhaite transmettre. On le note de la manière suivante : $\left(w_{n+1}, w_n, \ldots, w_1\right)$.\\
+On transmet alors $f(.)=<A,x>+a$ où $A=w_{n+1}, \ldots, w_2$ et $a=w_1$. On transmet ensuite la table de vérité de la fonction.\\
+\subsubsection{Exemple}
+On veut coder $(101)$. On envoie alors la table de vérité de $<(1,0),x>\oplus1$.\\
+\begin{center}
+  \begin{tabular}{cc|c}
+  $x_2$ & $x_1$ & $<(1,0),w>+1$\\\hline
+  0 & 0 & 1\\
+  0 & 1 & 1\\
+  1 & 0 & 0\\
+  1 & 1 & 0\\
+  \end{tabular}
+\end{center}
+(on fait $+1$ à $x_2$)\\
+Décodage sur le papier.\\
+\subsection{Transformée de Reed Muller}
+$TV_f\rightarrow ANF(f)$\\
+Soit $f:\mathbb{F}_2^n\rightarrow\mathbb{F}_2$.\\
+\begin{equation}
+ ANF(f)=\oplus_{}A_\alpha.x\alpha
+\end{equation}
+Si $x=(x_n,\ldots,x_1)$ et $\alpha=(\alpha_n,\ldots,\alpha_1)$, alors 
+\begin{equation}
+ x^\alpha=\left(x_i^{\alpha_i}\right)_{i\in\mathbb{N}\leqslant n}
+\end{equation}
+On en déduit alors la proposition suivante : 
+\begin{prop}
+ \begin{equation}
+  a_\alpha=\oplus_{\beta\leqslant\alpha}f\left(\beta\right)
+ \end{equation}
+\end{prop}

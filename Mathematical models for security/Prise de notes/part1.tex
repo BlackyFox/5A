@@ -1,0 +1,106 @@
+\rhead{12/10/2015}
+\section{Théorie des graphes}
+\subsection{Définitions et généralités}
+\begin{description}
+ \item[Les \textit{p-graphes} (orientés)] C'est un couple $G (X,U)$. $X$ est l'ensemble des nœuds et $U$ l'ensemble des arcs. $U$ est une famille et non un ensemble. Ainsi on peut avoir plusieurs fois un élément représenté : $U={u_1, u_2, u_2, u_3, \ldots}$.\\GRAPHE\\Pondérer un graphe c'est faire une application C pour laquelle $C:U\rightarrow R$.\\
+ Boucle $u\in U | (x_i, x_i)$ 
+ \begin{itemize}
+  \item $w^+(x)$ c'est l'ensemble des arcs qui arrivent sur le nœud
+  \item $w^-(x)$ c'est l'ensemble des arcs qui partent du nœud
+  \item $w(x)=w^{+}(x)\bigcup w^{-}(x)$
+  \item $|X|=N$
+  \item $|U|=M$
+ \end{itemize}
+ \item[1-graphes] Ce sont des \textit{p-graphes} avec $p=1$.
+ \item[Densité] La densité d'un graphe orienté est égal au cardinal de $U$ divisé par $N^2$ : $d=\frac{|U|}{N^2}=M$
+ \item[Multi-graphes] Ce sont des \textit{p-graphes} sans les \enquote{flèches}. Ici, on n'a pas la notion de sens entre les noeuds liés. On a alors le modèle suivant : $G=(X, E)$ où $E$ représente les arêtes.\\Ici, la densité est égale à $d=\frac{M}{\frac{N(N-1)}{2}}$.
+\end{description}
+
+\section{Parties de graphes}
+Un sous-graphe de G c'est la partie engendrée par A soit, pour un graphe $G=(X,U)$ où $A=X$, $SG_A(G)=(A, A^2\bigcap U)$.\\
+Un graphe partiel de G est un sous graphe ayant le même nombre de noeuds mais on restreint le nombre d'arc. Soit, pour notre graphe $G=(X,U)$, on a $V\subset U$. Ce qui nous donne $SG_V(G)=(X,V)$.
+
+\section{Parcours et connexité}
+On a la notion de chemin. C'est une séquence de transition entre des noeuds. Un arc est un chemin de valeur 1.
+Un chemin fermé est un circuit, un cycle ($u_1, u_2, u_3, \ldots, u_1$).\\
+Un parcours élémentaire est un cycle, un chemin, ou une chaîne ne passant au plus qu'une fois par un sommet donné.\\
+\subsection{Fermeture transitive d'un graphe}
+On a $G=(X,\Gamma)$. $\Gamma : X \rightarrow P(x)$ soit $x \rightarrow {y|(x,y)\in U}.$\\
+La fermeture transitive de x c'est l'ensemble des points y que je peux joindre en fonction d'une longueur donnée : $lim({x} \bigcup \Gamma(x) \bigcup \Gamma(\Gamma(x)))$.
+\subsection{Connexité}
+Un graphe est dit connexe ssi $\forall (x,y) \in X^2$ il existe un chemin allant de $x$ à $y$. $\forall y, y \in \Gamma(x)$.\\
+GRAPHE 3\\
+\subsection{Point d'articulation (Cut point, articulation point)}
+C'est un sommet qui augmente le nombre de composante connexes si on l'enlève.
+\subsection{Un isthme}
+C'est un arc qui augmente le nombre de composantes connexes si on l'enlève.
+\subsection{Un graphe fortement connexe}
+Pour un graphe orienté $G(X,U)$ est dit fortement connexe ssi $\forall x,y; (x,y)\in U et (y,x)\in U$.
+
+\section{Parcours eulériens et hamiltoniens}
+Ces problèmes ont été rendus célèbres par les problèmes de tourmé ou du voyageur de commerce, etc\ldots\\
+Un graphe dual c'est un graphe dans lequel on échange les arcs et les noeuds.
+\subsection{Parcours eulériens}
+Un parcours dans un graphe est eulérien ssi il passe une et une seule fois par toutes les arêtes de G.\\
+GRAPHE\\
+Ce graphe est un parcours eulérien. En effet, il est possible de passer par les noeuds une seule fois.\\
+\begin{theo}
+Théorème d'Euler\\
+Un multigraphe admet un parcours eulérien si et seulement si :
+\begin{itemize}
+ \item il est connexe
+ \item il possède 0 ou 2 sommets de degré impair.
+ \begin{itemize}
+  \item S'il a 0 sommet de degré impair, le parcours est un cycle
+  \item S'il a 2 sommets de degré impair, le parcours est obligatoirement une chaîne reliant ces deux points.
+ \end{itemize}
+\end{itemize}
+\end{theo}
+\subsection{Parcours hamiltonien}
+Un parcours $\mu$ est hamiltonien s'il passe une et une seule fois par tous les sommets de G.\\
+Ce parcours est connu grâce au problème du voyageur de commerce (PVC)\footnote{Travelling Sales Man (TSM)}.
+
+\section{Graphes particuliers}
+\subsection{Graphes symétriques}
+Si $(x,y) \in U \Leftrightarrow (y,x) \in U$
+\subsection{Graphes antisymétriques}
+
+\subsection{Graphes complets}
+$\forall x \in X, \forall y \in X, (x,y) \in U$\\~\\
+\begin{theo}
+La clique\\
+ La clique d'un graphe G est tout sous-graphe complet.
+\end{theo}
+
+\subsection{Graphes bipartites / multipartites}
+$G=(X_1,X_2,\mu)$\\$X_1\bigcup X_2=X$\\$\forall (x,y) \in U, X \in X_1 et Y \in X_2$\\
+GRAPHE\\
+Dans le cas des graphes bipartites $K_{n_1,n2}$. Un graphe $K_{2,3}$ est un graphe dont les partites ont des point qui sont touts liés.
+
+\subsection{Graphes planaires}
+G est planaire ssi on peut le dessiner sans croisement d'arêtes.\\
+Tous les graphes tels que $|X|<5$ sont planaires.\\
+\begin{exo}
+ Montrer que $K_{2,3}$ est planaire.
+\end{exo}
+CORRECTION = GRAPH\\
+$K_5$ est le plus petit graphe complet non planaire.\\
+$K_{3,3}$ est le plus petit graphe complet k-partite non planaire.
+\begin{theo}
+ Théorème de Kuratowski\\
+ $G=(X,E)$ et planaire\\
+ Ssi il ne contient aucun sous-graphe réductibles à $K_5$ ou $K_{3,3}$.\\
+ Un sous-graphe $G_1$ est réductible à un sous-graphe $G_2$ si on peut rendre $G_1$ égal à $G_2$ en réduisant les noeuds et en contractant chaque sommet de degré 2.
+\end{theo}
+\subsection{Les arbres}
+Ce sont des graphes connexe et sans cycle. Cela implique que $M=N-1$.\\
+GRAPHE\\
+Pour un arbre, il suffit d'enlever une arête pour augmente le nombre de composantes connexes.\\
+Une arborescence, c'est un arbre orienté.\\
+GRAPHE\\
+\subsubsection{Les anti-arborescences}
+Une anti-arborescence est un arbre dans lequel le sens des arcs a été inversé.
+
+\subsubsection{Les arbres recouvrants}
+On a : $G=(X,E)$ et $T$, un graphe partiel connexe de G.\\
+$T$ est un arbre connexe recouvrant\footnote{Spanning tree} de $G$. On retrouve ces problèmes dans les arbres généalogiques, dans les hiérarchies, dans les réseaux, etc\ldots

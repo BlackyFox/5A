@@ -1,0 +1,48 @@
+Les valeurs sont en hexadecimal
+
+Crypto aubry.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto bardeur.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto bonnetain.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto breban.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto carnec.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto chauveau.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto couprit.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto deoliveira.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto kaluzinski.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto langenay.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto leandre.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto leclair.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto mabriez.cry - Etat initiaux des registres 1 et 2 : 17751 29519 
+
+Crypto marret.cry - Etat initiaux des registres 1 et 2 : 17751 49519 
+
+Crypto paulais.cry - Etat initiaux des registres 1 et 2 : 17751 49519 
+
+Crypto piquenot.cry - Etat initiaux des registres 1 et 2 : 17751 41519 
+
+Crypto rastel.cry - Etat initiaux des registres 1 et 2 : 17751 21519 
+
+Crypto robin.cry - Etat initiaux des registres 1 et 2 : 17751 9519 
+
+Crypto rouquette.cry - Etat initiaux des registres 1 et 2 : 17751 21519 
+
+Crypto triollet.cry - Etat initiaux des registres 1 et 2 : 17751 19519 
+
+Crypto vernot.cry - Etat initiaux des registres 1 et 2 : 17751 39519 
+
+Crypto videau.cry - Etat initiaux des registres 1 et 2 : 17751 41519 
+
+Crypto vigneux.cry - Etat initiaux des registres 1 et 2 : 17751 11999 
+

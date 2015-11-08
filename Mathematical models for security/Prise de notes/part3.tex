@@ -1,0 +1,33 @@
+\section{Vision algébrique de la théorie des graphes}
+\subsection{Matrices d'adjacences}
+On a $G=\left(X,E\right)$ un graphe simple avec $|X|=n$.\\
+La matrice d'adjacence de $G$ est un matrice de taille $n$. On a $A=[a_{ij}]_{i,j \leqslant n}$.
+\begin{equation}
+ a_{ij}=\left\{
+    \begin{array}{ll}
+     1~si~(i,j)\in E\\
+     0~sinon
+    \end{array}
+  \right.
+\end{equation}
+\subsection{Spectre de graphes}
+Spectre de graphe $G=(X,E)$ est noté de la matière suivante :
+\begin{equation}
+ Spec~G=
+ \begin{pmatrix}
+  \lambda_{0} & \lambda_{1} & \ldots & \lambda_{s-1}\\
+  m(\lambda_{0}) & m(\lambda_{1}) & \ldots & m(\lambda_{s-1})
+ \end{pmatrix}
+\end{equation}
+\subsection{Polynôme caractéristique}
+...\\
+Propriété : 
+\begin{itemize}
+ \item $C_1=0$
+ \item $-C_2=$ nombre d'arêtes de G
+ \item $-C_3=$ nombre de triangles dans G $\Leftrightarrow K_3$
+\end{itemize}
+
+Proposition : Le nombre de chaînes/cycles de taille $l$ dans $G$ joignant $x_i$ et $x_j$ est la valeur des $a_{ij}$ de $A^l$.\\
+Proposition : Soit $G$ un graphe connexe de matrice d'adjacence $A$ et de diamètre $d$. Alors, la dimension de $A(G)$ est au moins égale à $d+1$.\\
+Corollaire : Soit un graphe $G$ connexe tel que $|x|=n$ et de diamètre $d$. On a $v$ a valeur propre avec $d+1 \leqslant v\leqslant n$

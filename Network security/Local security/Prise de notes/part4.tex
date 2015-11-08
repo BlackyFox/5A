@@ -1,0 +1,28 @@
+\rhead{01/10/2015}
+\section{Correction du lab : Frame analysis}
+Le mode promiscuous donne un ordre au firmware de la carte réseau.\\
+Il existe un mode \enquote{injection de trames} afin de pouvoir forger des trames Wi-Fi.\\
+Le fichier faisait le lien entre le code carte mère et le nom de l'entreprise est le fichier \enquote{manuf}. Ce fichier se trouve au chemin suivant (sous Debian 8) :
+\begin{lstlisting}[style=custombash]
+ /usr/share/wireshark/manuf
+\end{lstlisting}
+Pour capturer en ligne de commande, on peut utiliser \enquote{tcpdump} ou \enquote{tshark}.\\
+Pour la résulution graohique des protocoles et services, Wireshark utilise respectivement les fichiers 
+\begin{lstlisting}[style=custombash]
+ /etc/protocols
+\end{lstlisting}
+et 
+\begin{lstlisting}[style=custombash]
+ /etc/services
+\end{lstlisting}
+Différences entre les paquets icmp d'ethernet (56 octets) : ICMP va alors gonfler la trame afin qu'elle fasse la taille minimale.\\
+Sous Linux on charge la table ASCII depuis le début jusqu'à que la taille soit atteinte.\\
+Sous Windows, la même chose est faite mais à partir de $0x41$ (caractère A).\\
+Ainsi, il est possible de savoir, rien qu'en regardant un paquet ICMP, à partir de quel OS le ping a été réalisé. On appelle ça, l'OS Fingerprinting.\\
+Pour forger des paquets, l'outil \textit{SCAPI} est très performant et très proche du Python.\\
+ARP Poisonning = ARP Flooding $+$ ARP Spoofing\\
+La bannière, c'est la partie dans laquelle le client WEB met des informations sur le système hôte. Pour ne plus afficher ces données, on va pouvoir installer des plugins ou choisir un navigateur le faisant de base\cite{KONQ}.\\
+Le Gratuitious arp (apr gratuite qui sert à savoir s'il n'y a pas sur le réseau une machine ayant la même IP). La source est donc 0.0.0.0\\
+Windows, dans le cas d'une réponse positive (un PC disant que oui, l'adresse IP est prise) va alors se déconnecter du réseau en disant que l'IP est déjà prise. Il suffit de faire un paquet qui sera envoyé à tous les gratuitious arp répondant oui pour faire tomber tout un réseau (fausse MAC dans le paquet).\\
+Sous Linux, la même chose est faite, mais on peut l'enlever. Il faut regarder le script de \textit{ifup}. Vers la ligne 400, on peut voir qu'un \textit{arping} est réalisé sur sa propre adresse IP. Il suffit de commenter cette partie pour que cela ne soit pas fait et ne pas avoir d'erreur.\\
+Dans le fichier \enquote{capture4.cap}, on va retrouver un mail comprenant une pièce jointe. Cette dernière, encodée en en Base64, n'est pas lisible par un humain. Pour avoir le mail complet, il faut, dans Wireshark, suivre le flux TCP\footnote{Follow TCP stream} afin de voire le message. Dans la fenêtre, cliquer sur \textit{enregistrer sous} puis donner l'extension \enquote{.eml} au fichier. En l'ouvrant, il est possible de retrouver la pièce jointe.

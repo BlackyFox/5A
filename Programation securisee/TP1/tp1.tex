@@ -1,0 +1,40 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[none]{hyphenat}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{spverbatim}
+
+\lhead{Antoine Puissant}
+\chead{Progammation (in)sécurisée - TP1}
+\rhead{2015-2016}
+
+\pagestyle{fancy}
+
+\sloppy
+
+\begin{document}
+
+%\maketitle
+\include{title}
+
+\begin{abstract}
+L'objectif de ce TP est d'analyser un code C/C++ afin de trouver une vulnérabilité dans ce dernier. Une fois trouvée, nous devrons exploiter la vulnérabilité en implémentant un \textit{stack based buffer overflow}.
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\include{part1}
+\include{part2}
+\newpage
+\listoffigures\addcontentsline{toc}{section}{\listfigurename}
+\end{document}

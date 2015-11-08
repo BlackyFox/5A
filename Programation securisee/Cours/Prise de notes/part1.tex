@@ -1,0 +1,48 @@
+\rhead{14 sept 2015}
+\section{Projet}
+Lastname\_Firstname\_SEC\_secprog.zip\\
+Programmation sécurisée permettant d'éviter les erreurs classiques
+\begin{itemize}
+ \item Static analysis : rapport du code ligne à ligne (connaît les fonctions)
+ \item Code checking : 
+ \item Analyse dynamique: Analyse du comportement du programme
+ \item Reverse engineering : pas sur les applications sur un soft propriétaire
+ \item Flow control : analyse le contrôle et le suivi du code
+\end{itemize}
+Pour trouver des bugs, on peut faire du dynamic testing, de multiples tests sur differentes conditions ou utiliser un groupe de qualité utilisation.\\
+
+\section{Software vulnerability}
+
+Dans l'exemple de code, on a deux petites erreurs :
+\begin{itemize}
+ \item \textit{strcpy} : il faut vérifier que le buffer de destination corresponde avec celui de départ.
+ \item \textit{sizeof et srtlen} : le premier ne prend pas en compte le NUL en fin de chaîne alors que le second le prend en compte.
+\end{itemize}
+Dans le second code, on retrouve les erreurs suivantes :
+\begin{itemize}
+ \item Dans le second \textit{if}, il faudrait désaouller la mémoire de la première allocation.
+\end{itemize}
+Dans le troisième code, on retrouve les erreurs suivantes :
+\begin{itemize}
+ \item Si length est égal à 0x7FFFFFFF, quand on fait le +1 dans le \textit{if}, on passe alors à 0x80000000 qui est un nombre négatif.
+\end{itemize}
+La fonction sprintf est a utiliser de différentes façons. La première utilisation est à préserver.\\
+\enquote{\%.nombre s} permet d'afficher le nombre de caractères.
+
+\section{TP 1 : Buffer overflow}
+Ici, on va faire des stack base buffer overflow.\\
+La pile est une \textit{FILO\footnote{First In, Last Out}}.\\
+Prolog = initialisation de la mémoire :
+Avant même de faire le prolog, le programme va sauvegarder la prochaine instruction (eip)
+\begin{itemize}
+ \item push de la valeur de ebp $\rightarrow$ sauvegarde de la valeur actuelle du pointeur.
+ \item move ebp, esp. On fait pointer epb sur esp.
+ \item sub esp, xxx. 
+\end{itemize}
+Ainsi, entre ebp et esp, nous allons retrouver l'ensemble de nos variables locales définie dans la fonction.\\
+Epilog = restauration de l'espace mémoire :
+\begin{itemize}
+ \item move esp ebp
+ \item 
+ \item ret (move eip) $\rightarrow$ retourne à la fonction main
+\end{itemize}

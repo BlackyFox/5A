@@ -1,0 +1,84 @@
+\section{Classes de problèmes en théorie des graphes}
+\subsection{Introduction et rappels}
+Pour résoudre un problème, il faut savoir combien de temps la résolution va durer. On va alors calculer la complexité d'un algorithme (et non d'un programme).\\
+On va retrouver deux grands types de problèmes :
+\begin{description}
+ \item[Les problèmes \enquote{faciles}] Ce sont des problèmes que l'on va pouvoir résoudre dans une durée finie. Le nombre $f(n)$ d'opération est un polynôme (de manière générale). Par exemple, pour de la multiplication matricielle, on a $f(n) = O(n^3)$.\\ On se place ici dans les problèmes de classe P.
+ \item[les problèmes \enquote{difficiles}] Ce sont des problèmes où le $f(n)$ est exponentiel ($Z^n$).\\On se place ici dans des problèmes NP (Non déterministe Polynomial). Cela veut dire que l'on va pouvoir résoudre le problème en temps humain mais on va pouvoir vérifier la solution en temps fini (pour une solution donnée).
+\end{description}
+
+\subsection{POC et PE}
+Un POC\footnote{Problème d'Optimisation Combinatoire} est un problème dans lequel on chercher à trouver la valeur minimale $s^{*}$ d'une application $f$ ($f(x) \in \mathbb{N} ou \mathbb{R}$) sur un ensemble fini $S$ : 
+\begin{equation}
+ f(s^*)=\min_{s\in S}{f(S)}
+\end{equation}
+$f$ est la fonction économique ou fonction de coût.\\
+Un PE\footnote{Problème d’Existence} est un problème dans lequel $f: S \rightarrow {0,1}$. On cherche s'il existe un élément $s\in S$ tel que $s$ satisfasse une propriété P. On peut dire, trivialement, que la réponse de ce problème est \enquote{oui} ou \enquote{non}.\\
+On peut retrouver dans cet ensemble les problèmes de décisions.\\
+Ici, on peut avoir :
+\begin{equation}
+ f(S)=0 \Leftrightarrow s~verifie~P
+\end{equation}
+Cela revient à calculer le minimum de $f(s)$ : 
+\begin{equation}
+ \min_{s\in S}{f(S)}
+\end{equation}
+Ainsi, un PE peut être exprimé en tant que POC.\\
+Un POC peut être exprimé en tant que PE si l(on fixe des contraintes.\\
+\begin{exo}
+ On a $G=(X,U,C)$, 2 sommets $t$ et $s \in G$ ($t\neq s$).\\
+ But : Trouver un chemin de coût minimal de $s$ à $t$.\\
+ $f:S\rightarrow \mathbb{R}$\\
+ chemin $\mu \Leftrightarrow f(\mu)=\sum_{(ij)\in \mu} C_{ij}$
+\end{exo}
+
+\subsection{Classes de problèmes de graphes faciles}
+\subsubsection{Les problèmes d'exploration de graphes}
+On va retrouver des problèmes de type PE : $G=(X,U), s, t$ de $X$.\\
+Question : existe-t-il un chemin entre $t$ et $s$ ? (PE et si contrainte c'est un POC)\\
+On a ici une complexité en $O(M)$. C'est ainsi en fonction du nombre d'arcs.
+\subsubsection{Chemins de coût optimal}
+On a un graphe $G=(X,U,C), s, t \in X$.\\
+Question : trouver un chemin optimal de $s$ à $t$.\\
+La résolution générale de ce type de problème est faite par l'algorithme de Bellman en $O(NM)$. C'est ainsi en fonction du nombre de liens et de nœuds.\\
+Si c'est sans circuit, on trouve une complexité en $O(M)$.\\
+Si, $\forall (i,j) \in U i,j>0$, alors on va utiliser l'algorithme de Dijkstra et on a un complexité de $O(N^2)$.
+\subsubsection{Problèmes de flots}
+Ici, on a plutôt un POC. Il est souvent représenté par le problème de \textit{Max Flow}.\\
+On a $G=(X,U,C,s,t)$. $C_{i,j}$ désigne une capacité.\\
+But : maximiser, optimiser le débit du flot pouvant s'écouler de $s$ à $t$ avec la contrainte que $\varphi_{ij} \leqslant C_{ij}$.\\
+On va alors utiliser l'algorithme de Ford-Fulkerson avec un complexité de $O(N.M^2)$.
+\subsubsection{Arbres recouvrants}
+On a ici un POC souvent représenté par le problème du \textit{Maximum spanning tree}.\\
+On a $G=(X,E,W)$.\\
+But : trouver un arbre recouvrant de poids minimal.\\
+On va utiliser l'algorithme de Prim en $O(N^2)$ ou l'algorithme de Kruskal en $O(M.log_2N)$.
+\subsubsection{Problèmes de couplage}
+On se place ici sur un POC.\\
+On a $G=(X,E)$. $C\subset E$ est un couplage si $H$ couple d'arêtes de $C$ n'ont aucun nœuds en communs.\\
+GRAPHE\\
+\subsubsection{Problèmes eulériens et chinois (POC)}
+On a $G=(X,E,W)$ ou $G=(X,U,C)$.\\
+On utilise des algorithmes en $O(M)$.\\
+Pour les problèmes chinois, c'est une dégradation. On doit trouver un passage d'au moins une fois par tous les arcs pour un coût minimal.
+\subsubsection{Tests de planarité (PE)}
+On veut savoir si le graphe est planaire ou pas. On va beaucoup s'en servir dans les réseaux électriques.\\
+On va utiliser l'algorithme d'Hopcrof et Tarjon qui a une complexité en $O(N)$.
+\subsubsection{Tests de bipartisme}
+On est ici en $O(M)$.
+
+\subsection{Problèmes difficiles de la théorie des graphes}
+\subsubsection{Stable maximal (undependant sct}
+On a $G=(X,E)$, $S\subset X$ $\forall x, y, \in S, (x,y)!\in E$.\\
+GRAPHE
+\subsubsection{Transversal minimal (POC)}
+On va retrouver cela dans le problème du vertex cover.\\
+On a $G=(X,E)$, $T\subset X$, $\forall x\in G$, $e=(i,j)$ avec $i\in T$ ou $j\in T$.\\
+GRAPHE
+\subsubsection{La clique maximale (POC)}
+On a $G=(X,E)$. On dit que $Q\subset X$ est une clique si $\forall(i,j)\in X^2, (i,j)\in E$.\\
+Un stable maximal dans $G$ équivaut à une clique dans $G^2$
+\subsubsection{Problèmes de coloration maximale (POC)}
+Problème des quatre couleurs.\\
+$G=(X,E)$ est k-colorables si avec $k$ couleurs distinctes on puisse colorier tous les nœuds de telle façon que deux nœuds adjacents soient de couleur différente.\\
+On appelle le nombre chromatique d'un graphe $\min_G(k)=s$.

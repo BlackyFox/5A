@@ -1,0 +1,71 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[none]{hyphenat}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{spverbatim}
+\usepackage{xcolor}
+
+\captionsetup{justification=centering}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  captionpos=b,
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=customc}
+
+\renewcommand{\lstlistingname}{Code}
+
+\lhead{Antoine Puissant}
+\chead{Progammation (in)sécurisée - TP2}
+\rhead{2015-2016}
+
+\pagestyle{fancy}
+
+\sloppy
+
+\begin{document}
+
+%\maketitle
+\include{title}
+
+\begin{abstract}
+L'objectif de ce TP est d'essayer différents formats de chaînes de caractères sur trois systèmes d'exploitation différents.
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\include{part1}
+\include{part2}
+\newpage
+\listoffigures\addcontentsline{toc}{section}{\listfigurename}
+\end{document}

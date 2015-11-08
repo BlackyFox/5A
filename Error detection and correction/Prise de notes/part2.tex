@@ -1,0 +1,77 @@
+\rhead{22/09/2015}
+\section{Introduction: The coding problem}
+On prend des \enquote{boules} de rayon $\rho$. Le volume c'est le nombre d'élements contenus dans cette sphère (éléments alors de $0$ à $k-1$).\\
+On appelle le \enquote{Packing radius} la plus grande valeur de rayon des boules de telle sorte que chaque centres des sphère soient disjointes.\\
+On a alors le rayon de couverture. C'est le plus petit nombre pour des sphères de centres disjoints coupent l'espace. Un mot peut alors être dans une ou plusieurs sphères.\\
+Après e-altération, on est capable de dire s'il y a eu dse erreurs.\\
+Un code $C$ est e-correcteur d'erreurs s'il peut décoder un code comprenant moins de $e$ erreurs.\\
+\subsection{...}
+On a un message : \\
+\begin{equation}
+ m=[x_1, x_2, ..., x_7]
+\end{equation} 
+On ajoute un bit de parité :
+\begin{equation}
+ f(m)=[x_1, x_2, ..., x_2, p]
+\end{equation}
+Contrôle de la parité :
+\begin{equation}
+ p=x_7=(+)_{i=0}^{6}x_i=(\Sigma_{i=0}^{6}x_i)
+\end{equation}
+
+Les codes de cartes bleues se font de la manière suivante :
+\begin{equation}
+ 4561 0032 4001 236P
+\end{equation}
+On va alors multiplier certain chiffres du code :
+\begin{equation}
+ (4*2)\equiv8[9]+5+((6*2)\%9)+1+...=44
+\end{equation}
+On doit aussi avoir 
+\begin{equation}
+ p\equiv0[10] \rightarrow p = 10 -(44\%10)=6
+\end{equation}
+Ainsi, $p = 6$ et on a :
+\begin{equation}
+ 4561 0032 4001 2366
+\end{equation}
+~\\\par
+La distance minimale d'un code c'est la plus petite distance entre deux mots de code.
+On a code $R-$répétition. On a $q=2$. C'est un code binaire. On a deux mots ${000...R-fois, 111...R-fois}$.
+On dit que C peut corriger $(d-1)$ mais pas $d$ erreurs.
+En prenant notre code à $R-$répétition, si tous les $0$ d'un mots sont changé (R erreurs), il est impossible de savoir que c'était des 0 à l'envoie.\\
+On note un code de la manière suivante :
+\begin{equation}
+ (n, M, d)
+\end{equation}
+où $n$ est la taille des mots, $M$ les codewords et $d$ est la distance minimale.\\
+Pour des codes qui sont simultanément $e$-correcteur d'erreur et $e'$-détecteur d'erreurs, alors $d(C)\geq2e+e'+1$.
+\begin{equation}
+ d-1=2e+e' > e'
+\end{equation}
+\begin{equation}
+ \frac{d-1}{2}=\frac{2e+e'}{2}=e+\frac{1}{2}e'>e
+\end{equation}
+un code est dit maximal si, lorsque l'on rajoute un mot de code on change la distance minimale.\\
+La valeur majorante (slide 11) est stable.\\
+Quand on a un code $(n, M, d)$, quel est le nombre de mots de code ? \\
+\subsection{Codes équivalents}
+Prodécé récursif de construction des codes.\\
+Code équivalents = Si un code $C'$ est obtenu en faisant des permutation de colonnes et de symboles d'un code $C$, alors ces deux codes sont équivalents.
+\subsection{Perfect codes}
+Situation idéale = partition parfaite\\
+Code parfait quand les sphère de diamètre $rho$ réalisent une partition ...\\
+Unz condition nécessaire mais pas suffisante pour avoir un code parfait et d'avoir $d$ impair.\\
+Si le rayon de pavage est égal au rayon de couverture alors on a un code parfait.\\
+Si $n$ est odd, alors il pourra être parfait.
+\subsection{Making new codes from old ones}
+\subsubsection{Extension de code}
+On va augmenter la taille des vecteurs.
+\subsubsection{Poinçonnage de code}
+On va poinçonner les codes. On va enlever certaines parties des vecteurs. On conserve la taille minimale en envoyant moins d'information.\\
+$N \leq M$
+\subsubsection{Raccourcissement d'un code}
+On garde seulement les mots de code d'un code qui ont à un endroit donné un symbole donné. On touche alors au nombre de vecteurs et à la taille de ces derniers. La distance minimale augmente donc on peut corriger plus.
+\subsubsection{Augmentation d'un code}
+\subsubsection{Somme de deux codes}
+\subsection{Conclusion}

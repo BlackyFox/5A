@@ -1,0 +1,1 @@
+gcc -ansi -O3 scex.c -o scex

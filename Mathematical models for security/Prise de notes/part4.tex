@@ -1,0 +1,85 @@
+\rhead{13/10/2015}
+\section{Fonction booléennes}
+C'est :
+\begin{equation}
+ \left\{\left\{0;1\right\} ^{2}, \wedge, \vee, -\right\} \\
+  Def :  \mathbb{F}_2^n \rightarrow \mathbb{F}_2
+\end{equation}
+On a ici les opérateurs \enquote{ou}, \enquote{et} et la complémentation.\\
+On a ici un corps fini\footnote{Fined field}.\\
+Table de vérité c'est un vecteur.\\
+On a $\vee_{\alpha\in\mathbb{F}_2^n}x^\alpha$.\\
+si $\alpha=(\alpha_1, \alpha_2, \ldots, \alpha_n)$, alors $x^\alpha=x_1^{\alpha}.x_2^{\alpha2}.x_3^{\alpha3}.\ldots.x_n^{\alpha n}$\\
+CFN : Conjonctive normal form.\\
+$\wedge(\vee_{\alpha i}~x_i^{\alpha i})$\\
+$ (x_1\vee \overline{x_2} \vee x_3)(x_2 \vee \overline{x_1} \vee \overline{x_3}) $\\
+Problème 3 sat\footnote{satisfaisant}. Résolvable par les sat solveur.\\
+Une formule conjonctuve n'est pas normale. Les formes dijonctives normales ne sont pas unique. Ce phénomène est génant.\\
+On va alors utiliser la forme algébrique normale.
+\subsection{Forme algébrique normale}
+Cela s'écrit de la manière suivante : $\bigoplus_{\alpha\in\mathbb{F}_2^n}~x^\alpha$\\
+On a alors : $x_1.x_2\oplus x_1.x_3\oplus x_2.x_3$\\
+Dans ce cas, $x_i^{\alpha i}=x_1$ si $\alpha i =1$ ou $x_i^{\alpha i}=1$ ou $x_i=0$\\~\\
+
+$f: \mathbb{F_2^n}\rightarrow\mathbb{F_2}$\\
+Le poids de Hamming de f est noté de la manière suivante :
+\begin{equation}
+ \omega t(f)=\left\|\left\{x\in\mathbb{F_2^n},  \right\}\right\|
+\end{equation}
+
+???\\
+Soit f une fonction associant .... On appelle transformée de Walsh Fourier de f, la fonction \^{f} la fonction allant de $\mathbb{F}_2^n$ à $\mathbb{C}$ définie par :
+\begin{equation}
+ \hat{f}(u) = \sum_{}^{} (-1)^{f(x)}.(-1)^{<x.u>}
+\end{equation}
+Leame : On a $\hat{f}=2^n.2.ham(f, <x,u>)$\\
+On a vu que $\hat{f}(0)=4$\\
+$ham(x,y)=\omega t(x\oplus y$\\
+Définition : Toutes les fonctions $\mathbb{F}_2$ linéaires sur $\mathbb{F}_2^n$ sont de la forme $<x,u>, \forall u$, soit :
+\begin{equation}
+ E x_i.u_i
+\end{equation}
+\begin{theo}
+ \begin{equation}
+  f(x)=2^n.(-1)^{f(x)}, \forall x
+ \end{equation}
+On a une quasi involutivité
+\end{theo}
+\begin{exo}
+ Toute fonction $\mathbb{F}_2$ linéaire non constante est équilibrée.
+\end{exo}
+\begin{theo}
+ Théorème de Parceval.\\
+ Soit $f: \mathbb{F_2^n}\rightarrow\mathbb{F_2}$. Alors, 
+ \begin{equation}
+  \sum_{u\in\mathbb{F}_2^n} (\hat{f}(u))^2 = 2^{2n}
+ \end{equation}
+\end{theo}
+Calcul tensoriel = matrices de matrices.\\
+Calcul de la transformée de WF :\\
+Méthode naïve : $f(u)=\sum_{} (-1)^{f(x)-2}$\\
+\subsection{Transformée de WF rapide : algorithme de Cooley-Tukey}
+Spectre de fourier pour la fonction tel que $...$. On calcule la totalité des valeurs du spectre de Fourier en on complexité logarithmique en temps et exponentielle en mémoire.\\
+\begin{equation}
+ Spectre_{WF}(f)=(0;4;4;0;4;0;0;-4)
+\end{equation}
+Application :\\
+$f$ équilibrée : $\hat{f}(000)=0$\\
+\begin{equation}
+ P(f(u)=<x,u>)=\frac{1}{2}.\left(1-\frac{\hat{f}(u)}{2^n}\right)
+\end{equation}
+\begin{equation}
+ P(f(u)=<x,u>)=\frac{1}{2}.\left(1-\frac{4}{8}\right)
+\end{equation}
+\begin{equation}
+ P(f(u)=<x,u>)=\frac{1}{2}.\left(\frac{3}{2}\right)
+\end{equation}
+\begin{equation}
+ P(f(u)=<x,u>)=\frac{3}{4}
+\end{equation}~\\~\\
+\begin{exo}
+ Démonstration d'un corollaire :
+ \begin{equation}
+  HAM(f,<x,u>)+HAM(f,<x,u>\oplus1)=2^n
+ \end{equation}
+\end{exo}

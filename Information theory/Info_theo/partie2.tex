@@ -1,0 +1,29 @@
+\chead{Information theory - 07/09/2015}
+\section{Qu'est-ce qu'une source d'informations ?}
+Une source d'informations est une suite de symboles d'un même alphabet.\\
+Source sans mémoire (zero-memory) : chaque symbole est vu comme une VA indépendante des autres. Les suivantes ne sont pas influencées par ce qui a été vu avant.\\
+Le problème est : comment représenter l'information de la meilleure manière possible ?\\
+Toute chaîne de codage a au plus, une image. On a ici des injection et pas des bijections.
+\textbf{On a une source S.\\Soient les mots $\omega_1$, $\omega_2$, $\omega_3$ et leurs probabilités respectives $p_1=0.9$, $p_2=0.05$, $p_3=0.025$, $p_4=0.025$.\\Comparer les codages suivants :\\Voir feuille manu\\$f1 et f2$ instantanés ?}\\~\\
+\enquote{\textit{A code f is instantaneous or a prefix code if...}}\\
+Un code instantanée est uniquement déchiffrable (l'inverse n'est pas vrai). Il peut être déchiffré à la volé.\\
+Exemples : \\
+$f(\omega_1)=0$\\
+$f(\omega_2)=10$\\
+$f(\omega_3)=110$\\
+$f(\omega_4)=1110$\\
+Soit un mot reçu suivant : $0|110|10|0|10|10|0|10$\\
+Soit, une fois déchiffré : $\omega_1|\omega_3[\omega_2|\omega_1|\omega_2|\omega_1|\omega_2$\\
+\textbf{}
+Décodage par l'arrière = mémoire qui stocke tout le message puis décodage une fois que tout est reçu. Donc pas intéressant (long, consomme beaucoup de ressources).
+\textbf{Montrer que quelque soit $n \in N^*$, il existe un code instantané sur [0, 1] qui a des mots de toutes les longueurs possibles dans l'ensemble $\{1,..., n\}$}\\
+L'inégalité de Kraft ne le fait que pour les codes instantanés. McMillan le fait pour les codes uniquement déchiffrables.\\
+preuves pour Kraft et McMillan dans les articles donnés.\\
+% \textbf{Exercice : codage de n mots de source équiprobable.\\
+% Sur $\Sigma=[0, 1]$.\\
+% Le théorème de Shannon donne :\\
+% $log_2(n)<= l(\Epsilon)$ (longueur du code)\\
+% Pour quelle valeur de n a-t-on égalité}
+
+\section{Construction de codes compacts}
+Algorithme d'Huffman = construction récursive.

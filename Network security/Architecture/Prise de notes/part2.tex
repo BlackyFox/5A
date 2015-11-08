@@ -1,0 +1,17 @@
+\rhead{07/10/2015}
+Pour administrer notre pare-feu, on peut passer par le SSH. Pour cela, on doit :
+\begin{itemize}
+ \item Installer le service sshd serveur
+ \item Le configurer sur un port de notre choix (ici, port 1313)
+ \item On va ensuite autoriser le SSH à passer sur le firewall
+\end{itemize}
+Pour visualiser les log, il faut taper (sous Mageia) journalctl -u ssh -f
+\section{NAT}
+Le SNAT c'est quand on change l'IP source. Les adresses IP du réseau local sont alors remplacées par l'adresse du routeur.\\
+Sur le client, on marque :
+\begin{lstlisting}[style=custombash]
+iptables -t NAT -A POSROUTING -o externe -j SNAT --source
+\end{lstlisting}
+A partir du moment que ça sort par la carte externe, on fait le NAT.
+\rhead{08/10/2015}
+L'option MASQUERADE permet de faire du SNAT quand on n'a pas d'IP fixe dans le réseau local. Ainsi, on n'a pas à mettre des règles pour les clients.

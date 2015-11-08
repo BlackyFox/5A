@@ -1,0 +1,39 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[french=nohyphenation]{hyphsubst}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{spverbatim}
+\usepackage{xcolor}
+\usepackage{subcaption}
+
+\input{conf.tex}
+
+\begin{document}
+  %\maketitle
+  \include{title}
+
+  \begin{abstract}
+  L'objectif de ce projet est de corriger un code C. Ce dernier, donné par le professeur comporte des failles de sécurité qui pourraient être exploitées afin de réaliser des \textit{buffer overflow} ou d'exécuter des codes injectés.
+  \end{abstract}
+  
+  \newpage
+
+  \tableofcontents
+
+  \include{part1}
+  \include{part2}
+  \include{part3}
+  \include{conclusion}
+
+  \newpage
+  \listoffigures\addcontentsline{toc}{section}{\listfigurename}
+
+\end{document}

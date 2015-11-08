@@ -1,0 +1,13 @@
+\rhead{08/10/2015}
+\section{Proxy}
+Les qutres fonctions du proxy sont :
+\begin{description}
+ \item[L'accélération] Pour cela, on va avoir un système de cache commun. Pour les pages statique c'est très performant puisque les pages ne seront pas unique pour chaque utilisateur. 
+ \item[Vérification de la conformité] On vérifie si le protocole est bon. Pour cela, on vérifie par rapport à la RFC. Il peut alors savoir si le paquet se disant d'un protocole est bien fait en fonction de ce que la RFC définie.\\Dans le cas de non conformité, on peut droper le paquet. Cependant, l'utilisateur ne saura pas pourquoi il ne peut pas avoir sa requête. On peut aussi corriger le paquet à la volée. Le proxy étant en coupure, et ayant l'intelligence de décoder le paquet pour le comparer à la RFC, il peut réencoder le paquet correctement.
+ \item[Anonymisation] C'est naturellement le cas puisque le client envoie sa requête au proxy, puis le proxy relie la requête. Le client est alors caché, inexistant pour les personnes externes.
+ \item[Filtre] Il pourra filtrer grâce à ses connaissances de la RFC, sur des URL (avec des whitelists et des blacklists).
+\end{description}
+Le proxy-cache est, généralement dans une DMZ.\\
+Si on souhaite que le proxy soit transparent pour l'utilisateur, il faut faire une règle de DNAT sur le pare-feu. Ainsi, quand une requête de l'utilisateur veut aller sur Internet, le pare-feu envoie la requête sur le proxy. Ce dernier va alors analyser la trame puis la renvoyer au proxy.
+\subsection{Reverse proxy}
+Le reverse proxy est au proxy ce que le DNAT est au NAT.\\ Le principe est le même que pour un proxy, mais à l'inverse : de l'extérieur à l'intérieur.

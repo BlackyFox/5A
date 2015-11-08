@@ -1,0 +1,13 @@
+diff --git a/scex.c b/scex.c
+index 30d123b..00f7dc0 100644
+--- a/scex.c
++++ b/scex.c
+@@ -68,7 +68,7 @@ int main(int argc, char * argv[])
+   /* Generation de la suite chiffante    */
+   /***************************************/
+   j = 0L;
+-  while(fscanf(fin,(argv[1][0] == 'e')?"%c":"%02X",&lettre), !feof(fin))
++  while(fscanf(fin,(argv[1][0] == 'e')?"%c":"%02hhX",&lettre), !feof(fin))
+    {
+     j++;
+     outblock = 0;

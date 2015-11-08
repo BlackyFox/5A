@@ -1,0 +1,61 @@
+\rhead{30/09/2015}
+\section{Sécurité du LAN}
+Sécurité de l'accès aux médias.\\
+Il faut connaître le MTBF\footnote{Mean Time Between Failures}. Cela permet de prévoir quand une panne du système risque d'arriver, dans son créneau de panne. Il faut ainsi prévoir de changer ce matériel quand on va arriver au MTBF. En moyenne pour des équipements ont un MTBF de 5 ans. Pour les PC constructeurs professionnels, le MTBF est de 3 ans.\\
+Il faut aussi prévoir la charge afin de pouvoir la répartir de manière adéquate.\\
+Il faut prendre en compte tous les risques en compte (risque de tremblement de terre, de chute de météorites, inondation, etc\ldots).\\
+Il faut chiffrer le coût de la connectivité. Savoir en combien de temps il faut pour remettre le système en place après un problème.\\
+Il faut aussi prévoir la consommation. Si le compteur n'est pas assez compétant, le courant sera insuffisant. Prévoir aussi des systèmes d'onduleurs en cas de coupure temporaire de courant. Peut-être un groupe électrogène en cas de coupure plus longue.\\
+Il ne faut pas oublier la température : les sondes, les climatiseurs, etc\ldots\\
+Le sol doit pouvoir être capable de supporter la charge qui lui est imposée.\\
+Enfin, plus logiciel, il faut prendre en compte des systèmes de sauvegarde et d'archivage. On va avoir des problèmes avec les archives magnétiques (dérèglement des champs magnétiques). On va préférer les systèmes d'archivages magno-optique : écriture en magnétique et lecture en optique. On va aussi pouvoir archiver sur des supports tels que les DVD et Bluray. Cependant ces systèmes s'usent avec la lumière. On passe alors sur des DVD ou Bluray en verre.\\
+Dans une entreprise, on va trouver le RSSI\footnote{Responsable de la Sécurité des Systèmes d'Information} secondé par l'Officier de Sécurité.
+Il existe 3 protocoles d'impression :
+\begin{itemize}
+ \item LPR (orienté Unix)
+ \item CUPS (orienté Windows)
+ \item RAWPRINTIG, sur le port 9100 (propriétaires)
+ \item Postscript. Cela va imprimer au format natif de l'imprimante. On se passe du spool (intégré à l'imprimante ou à un AD ou un serveur d'impression). Cela va imprimer directement.\\Pour cela, il faut attaquer l'imprimante en FTP : ftp:@IP\_imprimante put fichierpostscrip. Ne fonctionne que sur les imprimantes laser.
+\end{itemize}
+\newpage
+\section{Intranet: interconnection security}
+On se place dans plusieurs cas de figures : 
+\begin{itemize}
+ \item Réseaux de l'entreprise séparés physiquement du réseau internet (réseaux militaire, de la Défense).
+ \item Réseaux Internet et entreprise lié (entreprises privées).
+\end{itemize}
+Ici, on va se placer dans le cadre d'une entreprise privée. 90\% des entreprises sont protégées d'internet par\ldots rien.\\
+Pour mettre de la sécurité, il faut qu'il y ai un besoin de sécurité ; qu'il y ai une politique de sécurité.\\
+Il faut demander au patron ce qu'il veut, quel est son besoin en terme de sécurité (de manière générale le serveur ERP\footnote{Enterprise Resource Planning}).\\
+Il faut contrôler la sûreté de ce qui vient d'Internet.\\
+Par rapport à ces problèmes, il n'y a qu'une seule règle : on fait passer les paquets dans un \enquote{sas}. On va donc cloisonner (\textit{partitionning of flux}). On fait cela dans des DMZ\footnote{Demilitarized Zone}.\\
+En sécurité, le lien direct d'internet vers l'entreprise n'existe plus. On passe par les \enquote{zones de sécurité}. Généralement, on va mettre dans une zone les serveurs internet (serveurs web, de courrier, les serveurs publiques, \ldots). On va ainsi mettre une autre zone pour les données allant directement sur l'entreprise.\\
+Pour découper le réseau internet en fonction de l'architecture de l'entreprise, on peut configurer les switchs avec des VLAN.\\
+On va mettre 2 équipements pour rediriger les flux :
+\begin{itemize}
+ \item Un pare-feu qui va empêcher les accès illégaux (pare-feu bastion)
+ \item Un second pare-feu qui va permettre de faire de la redirection. Il est possible de rendre ce pare-feu plus intelligent avec un proxy (pare-feu = couche 3 et proxy = couche 4).
+\end{itemize}
+En général on ne met pas les mêmes marques pour les pare-feux interne et externe. Ainsi, Si celui qui est externe a une faille, il ne faut pas que le second ai la même.\\
+On va vouloir vérifier si les protocoles autorisés sont bons. Pour cela, il nous faut une application de la couche 4 : le proxy. Il va falloir un proxy par protocole. Aucun proxy ne sait faire plusieurs protocoles.\\
+Si l'on veut accélérer la vitesse de consultation de la navigation web des utilisateurs on va mettre un cache (un par protocole) dans le \enquote{sas}. Cela va permettre de ne pas charger la bande passante. Cela permet aussi d'anonymiser la connexion. De faire un NAT sur le routeur de sortie (MASKRADING).\\
+On va donc avoir des règles de proxies :
+\begin{itemize}
+ \item Contrôler
+ \item Filtrer les protocoles en fonctions de plein de critères
+ \item Anonymisation de la connexion. On se met en frontal. La sortie des clients (proxy cache, reverse proxy\footnote{Devant les serveurs} ou de masquerading)
+ \item Accélérer la connexion avec des proxy cache.
+\end{itemize}
+Pour détecter les intrusions ou comportements étrange, on va pouvoir avoir différentes solutions :
+\begin{itemize}
+ \item NIDS : Network base Intrusion Detection System
+ \item HIDS : Host based Intrusion Detection System
+ \item DIDS : Distributed : Intrusion Detection System
+ \item WIDS : Wireles IDS
+\end{itemize}
+Un IPS, contrairement à l'IDS a un retour sur un pare-feu. Il va alors pouvoir donner des consignes au pare-feu.\\
+CERT\footnote{Computer Emergency Response Team} va vendre des services de supervision pour récupérer les logs des IDS/IPS.\\
+En plus de la détection réseau, on va aussi pouvoir faire de l'analyse machine. Cela va s'occuper des fichiers de configuration, des processus, comparer les processus en cours d'exécution par rapport à ceux d'hier, etc\ldots Par exemple, PreludeIDS\cite{PRELUDE}.\\
+Les DIDS sont, de manière générale, conçut de manière interne et ne sont vendu quasiment qu'à des États, ou organisation gouvernementale.\\
+Pour les WIDS, ils vont analyser le spectre de la bande Wi-fi pour analyser les flux sur les différentes bandes de fréquences.\\\par
+On va vouloir aussi mettre en place des VPN\footnote{Virtual Private Network} afin de pouvoir connecter les site distants ou des personnes en télétravail dans le réseau de l'entreprise. Le flux VPN doit arriver sur les pare-feu. Ainsi, cela permet de ne pas violer la première règle (pas de lien direct depuis l'extérieur de l'entreprise) mais aussi de faire de l'analyse comportementale afin de vérifier de ne pas avoir d'intrusion depuis une machine de l'entreprise.

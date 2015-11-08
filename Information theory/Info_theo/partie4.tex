@@ -1,0 +1,26 @@
+\chead{Information theory - 10/09/2015}
+\section{General information sources}
+Modèle zero-memoire pas très adapté aux langages naturels.\\
+Source est une obj qui emet des signaux aléatoires.\\
+On considère une source ayant de la mémoire (dépendance avec les carac précédents)\\
+Source stationnaire : si on prend une séquence $s_1, s_2, \ldots, s_n$, l'apparition de la séquence ne dépend pas du temps.\\
+Règle des trois $\sigma$ : La proba que $[\mu - 3\sigma < X < \mu + 3\sigma]=0.9$\\
+Une source est ergodique si elle est stationnaire et si pour tout pattern, le proba de réalisation d'un pattern tend vers 1.\\
+\subsection{Chaînes de Markov}
+Markov source with ireductible matrix $\rightarrow$ langages naturels\\
+Distribution limite = distribution stable.\\
+Le premier théorème de Shannon s'applique aux sources générales.\\
+Le théorème 2 de Shannon s'applique aussi.\\
+
+\subsection{Langage}
+Chumsky\\
+On a un pb : On a une séquence et une grammaire. Est-ce que le mot $\in$ la grammaire.\\
+On peut classer les langages en 4 classes :
+\begin{itemize}
+ \item Classe 3 : grammaires/langages régulier (on a besoin d'un automate deterministe pour répondre au pb).
+ \item Classe 2 : contexte dépendant (pour résoudre le pb, il faut des automate non déterministes). Comprend les langages informatiques.
+ \item Classe 1 : contexte-free (pb compliqué à résoudre). Comprend les langages naturels.
+ \item Classe 0 : récursivement énumérables (insolvable)
+\end{itemize}
+\subsection{Conclusion}
+Ce sue l'on a vu dans le cas de sources simple (sans mémoire) fonctionne, de manière beaucoup plus complexe, avec des sources générales.

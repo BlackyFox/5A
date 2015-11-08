@@ -1,0 +1,57 @@
+\chead{Information theory - 08/09/2015}
+\section{Communication through noisy channels}
+Peut-on lutter contre les altération de la nature et si oui, comment ?\\
+Un canal de communication est une boîte noire. Cela peut être un espace mémoire (HDD, RAM) sur laquelle on va lire et écrire.\\
+Les canaux sans mémoire (un symbole ne dépend pas de ceux qui le précèdent) discrets (un nombre fini).\\
+Un canal est défini par une matrice de canal/distribution.\\
+La proba $p$ est la proba d'erreur.\\ 
+\subsection{Codage}
+La probabilité que le symbole binaire soit altéré est de $p$.\\
+La probabilité qu'un symbole ne soit pas changé est $q=1-p$.\\
+Sur $n$ mots émis, la probabilité que les mots soient émis correctement est de :\\
+\begin{center}
+  $((1-p)^3)^n$\\ 
+\end{center}
+soit,\\
+\begin{center}
+  $(1-p)^{3n}$\\
+\end{center}
+Doubler le message ne fait que de le détection d'erreurs.\\
+Pour de la correction d'erreurs, on va pouvoir faire de la \enquote{k-répétition} :
+\begin{center}
+  1 0 1 1 
+\end{center}
+est le message de base. Celui envoyé est le suivant :
+\begin{center}
+  111 000 111 111
+\end{center}
+On reçoit alors :
+\begin{center}
+  101 110 111 101
+\end{center}
+On va alors faire un \enquote{vote majoritaire} et avoir le message suivant :
+\begin{center}
+  1 1 1 1
+\end{center}
+On a donc ici un canal qui bruite plus que prévu. On va donc faire une répétition de 5 :
+\begin{center}
+  11111 00000 11111 11111
+\end{center}
+Et on reçoit :
+\begin{center}
+  11011 01100 11111 11011
+\end{center}
+Le vote majoritaire donne alors le résultat suivant :
+\begin{center}
+  1 0 1 1 
+\end{center}
+\subsection{Décodage}
+Une règle de décodage doit permettre de produire une partition.\\
+L'objectif est de minimiser le taux d'erreur résiduelle.\\
+L'observateur ne connaît pas des probabilité de distribution de ce qui lui arrive.\\
+Lorsque les mots de codes ont la même probabilité, les deux règles sont équivalentes.\\
+\section{Capacité}
+\section{Second théorème de Shannon}
+\section{Conclusion}
+Moyennant un mécanisme de redondance, on pourra toujours s'assurer que Bob et Alice aient la même information.\\
+On est ici dans la sûreté, la nature n'est pas mal	icieuse (contrairement à l'attaquant qui va changer en permanence $p$ de bruitage).
