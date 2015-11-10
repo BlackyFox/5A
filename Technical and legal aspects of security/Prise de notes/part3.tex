@@ -24,3 +24,9 @@ The problem is the size of everything you have to copy and analyze. You need as 
 If a HDD has been overwritten, data is ungetable. For SSD, it is really different (due to wear leveling and garbage collection).\\\par
 The problems when you do this are encryption, anti-forensic tools (kill switch), root-kits (intentionally or not), data hiding (stenography, etc\ldots).
 \subsection{Live forensic}
+This is about investigating on a active and running system. You can gather some sensitive data like networking ones. Those data can't be acquired with static forensic.\\
+Here, OOV are a bit worse than in static forensic. If you have some virtual machines. If you have some information on some servers, you might not be able to get the date from the company hosting it. But if you have some forensic tools, you can give it some VM disk images or dump RAM to be examined (using firewire or thunderbolt).\\
+You can use some tools like Microsoft's COFEE (live USB), FTK, EnCase, LiveView, etc\ldots\\
+TRESIR is something to prevent encryption key being store in the RAM. Then it's store in the process.\\
+Live forensic is much more about knowing you target, what you want to get.\\~\\\par
+The only tool you can't automate, it's your comprehension of the data.
