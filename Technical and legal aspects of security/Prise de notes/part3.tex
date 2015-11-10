@@ -1,0 +1,26 @@
+\rhead{10/11/2015}
+\section{Acquisition in computer forensic}
+\subsection{Introduction}
+Acquisition is about preservation and collection. Preservation is about safely securing important information (without damaging data). Collection is about safely collecting potentially important data.\\
+If you want to make an investigation, you have to seize every devices. Now, this means lots of devices like computers, mobile phones, drives, etc\ldots\\
+To gain some crucial information, you have to look for meta-data. This data of data is something really critical. They are created automatically so the user doesn't have full control of it. To trust meta-data, they must be sure about the veracity of this data. For example, for remote logging, you can correlate the information and be sure of it veracity. Since remote logging can prove something since they are from multiple devices (for example, logging from a camera feed plus phone location, etc\ldots).\\
+The problem with a computer is the volatility of data. This problem is called OOV\footnote{Order-Of-Volatility}. The volatile componants in a computer come in the following order:
+\begin{enumerate}
+	\item CPU: register and cache
+	\item RAM
+	\item Networking information (traffic and connection status)
+	\item Processes (running operating system and program used)
+\end{enumerate}
+\subsection{Static forensic}
+This is the \enquote{old way} of analysis. For example, they would seize a computer, make an image of the hard disk and start investigate right there. But this is really dangerous. You don't start a computer on the place. It can be rigged with explosives. When you are on site, you just have to collect it and start the analyze it later, in a lab.\\
+The information can be find on multiple types of devices: HDD, USB-keys, mobile phones, etc\ldots\\
+When you have copy your data, you have to prove the copy didn't made a error and alter the one on the source. To do so, you hash the data so you can check the hashes (MD5, SHA1, etc\ldots).\\
+To do some static forensic, you have lots of open sources software: Autopsy, OS forensic, FTK, Encase, XRY, Kali, etc\ldots\\\par
+When you want to make a copy of an HDD, you cannot plug in the drive directly onto your computer because some meta-data will change on the disk. On different file system (NTFS, EX, etc\ldots), there are some meta-data about last time it was mounted, is it was unmounted it normally, etc\ldots To counter this, you have to get some write-blockers. You can, if you know correctly how to use Linux, do a write-blocker with software.\\
+If you don't know what a device is doing exactly, don't touch it. You might damage the data.\\
+To make the acquisition, there are many tools. Use some forensic tools (not DD) like FTK Imager. To be able to recover some documents (deleted files), you can also use some tools.\\
+A proper image is a bit-level copy.\\
+The problem is the size of everything you have to copy and analyze. You need as many storage as the suspect to copy it.\\
+If a HDD has been overwritten, data is ungetable. For SSD, it is really different (due to wear leveling and garbage collection).\\\par
+The problems when you do this are encryption, anti-forensic tools (kill switch), root-kits (intentionally or not), data hiding (stenography, etc\ldots).
+\subsection{Live forensic}

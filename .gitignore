@@ -4,6 +4,7 @@
 /**/*.xml
 /**/*.toc
 /**/*.bib
+!/**/biblio.bib
 /**/biblio.bib
 /**/*.backup
 /**/*.bbl
