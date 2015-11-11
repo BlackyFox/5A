@@ -13,6 +13,7 @@
 \usepackage{spverbatim}
 \usepackage{xcolor}
 \usepackage[backend=bibtex]{biblatex}
+\usepackage{longtable}
 
 \captionsetup{justification=centering}
 
@@ -60,3 +61,7 @@
 \sloppy
 
 \addbibresource{biblio.bib}
+
+\newcolumntype{b}{X}
+\newcolumntype{s}{>{\hsize=.5\hsize}X}
+\newcommand{\heading}[1]{\multicolumn{1}{c}{#1}}
