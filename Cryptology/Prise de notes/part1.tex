@@ -30,7 +30,7 @@ Pour ces deux problèmes, on peut mettre en place des systèmes de vérification
 On a aussi les problèmes TRANSEC : brouillage de communication, coupure de canal, A qui veut cacher l'envoie d'un message.
 \subsection{Les solutions}
 \begin{description}
- \item[La confidentialité] Les données doivent rester initelligibles à toutes personnes non destinataires
+ \item[La confidentialité] Les données doivent rester inintelligibles à toutes personnes non destinataires
  \item[L'intégrité] 
  \item[L'authentification] 
  \item[La signature] 
@@ -66,3 +66,50 @@ Cependant, ce système est très lent et n'est que supposé sûr\footnote{Snowde
 
 \subsubsection{Chiffrement hybride}
 On chiffre le message de manière symétrique. On chiffre la clé de manière asymétrique. On envoie les deux chiffrés (la clé chiffré en asymétrique et le message en symétrique).
+\subsection{L'intégrité : le hachage}
+Une fonction de hachage est une fonction qui transforme une chaîne de longueur quelconque en une chaîne fixée (128 ou 160 bits) appelée condensé ou haché (MD5, SHA-A, RIPEMD-160).\\
+$H$ est une fonction de hachage si : 
+\begin{itemize}
+ \item $H(M)$ se calcule facilement à partir de $M$
+ \item $H$ est sans collision : connaissant $M$ et $H(M)$, il est difficile de trouver $M'\neq M$ tel que $H(M')=H(M)$
+\end{itemize}
+Le hachage permet d'assurer l'intégrité, grâce au MIC\footnote{Message Integrity Code}.\\
+On peut aussi assurer l'authentification si on adjoint un paramètre secret grâce au MAC\footnote{Message authentification Code}. Il est préférable d'utiliser un MAC afin de savoir qui a produit le message.
+\subsection{La signature électronique}
+\subsubsection{Authentification}
+A envoie un message à B. On dit que B authentifie A si et seulement si :
+\begin{itemize}
+ \item A peut prouver à B qu'il est bien A
+ \item E$\neq$A ne peut prouver à B qu'il est A
+\end{itemize}
+Avec cela, on a que que de l'identification. Pour avoir de l'authentification, il faut être sûr que le message n'a pas été modifié. L'intégrité doit être prise en compte.\\
+\begin{center}
+ \textbf{Authentification = identification + intégrité}
+\end{center}
+~\\\par
+Un message $M$ est signé par $A$ si et seulement si :
+\begin{itemize}
+ \item A peut prouver à B qu'il est bien A
+ \item E$\neq$A ne peut prouver à B qu'il est A
+ \item B peut prouver à un tiers D que A est l'auteur (et le seul) du message $M$\\Si D=A, alors il y a non répudiation par A
+\end{itemize}
+\begin{center}
+ \textbf{Signature = Authentification + conviction de transfert}
+\end{center}
+Dès que l'on a un message $M$ assez volumineux, on va prendre un hache de $M$, $H(M)$. On va alors signer le hache, $H(M)$ et chiffrer $M$.
+\section{Cryptanalyse}
+\subsubsection{Les clés}
+La sécurité doit reposer uniquement sur la clé, pas sur le système cryptographique.\\
+Une clé est un paramètre secret d'un algorithme cryptographique.\\
+Une clé est composée de deux facteurs :
+\begin{itemize}
+ \item Entropie : C'est l'incertitude autour de la clé.
+ \item Cryptopériode : C'est la durée de vie opérationnelle d'une clé.
+\end{itemize}
+Sur les appareils embarqués, on utilise de la Lightweight Cryptography (64 bits).\\\par
+En terme d'attaque, il faut supposer que l'algorithme est connu.\\
+On va avoir deux types d'attaques :
+\begin{itemize}
+ \item Attaque à chiffré seul : l'attaquant connaît le chiffré et veut connaître le clair et si possible la clé.\\On peut faire des attaques exhaustive de clés (attaques par dictionnaire) ou de l'utilisation de redondance dans le clair.
+ \item Attaque en clair probable, connu ou choisi
+\end{itemize}

@@ -1,0 +1,39 @@
+\section{Cryptographie symétrique}
+\subsection{Introduction}
+On a un message $M$, $K$ une clé et $\Gamma$ un cryptogramme.\\
+Equivocation de la clé, c'est l'incertitude de la clé. Elle doit toujours être supérieure à celle du clair (il doit être beaucoup plus complexe de trouver la clé que le clair).\\
+L'AES et le DES ne sont pas des système à chiffrement parfait. Il y a un nombre fixé de clés. Ainsi, on doit réutiliser certaines clés. Les seuls systèmes parfaits sont les systèmes dont la clé est aussi longue que le texte. C'est une addition modulo 2 de la clé et du clair (bit à bit). C'est un système soit aléatoire, soit pseudo aléatoire en fonction de la génération de la suite chiffrante.\\
+Sur les systèmes par flot, s'il y a une erreur lors de la transmission du chiffré, cette erreur ne ne propage pas.
+\subsection{Machines à pseudo-aléa}
+On a un algorithme dans lequel on met une clé $K$ dont la taille est fixée. Cette clé, au travers d'un automate va être expansées en un cle $\Sigma K(C)$.
+\paragraph{Exercice}~\\\par
+Soit un DES à 3 tours 
+\section{Modes de chiffrements}
+Un mode permet de traiter les chiffrer et clairs. Cela va permettre de passer de blocs en blocs. Dans la vie de tous les jours, ça ajoute une sécurité dans le gestion des blocs.
+\subsection{Electronic Code Book -- ECB}
+Assez intuitif. On prend 64 bits, on chiffre et on le repose sur le disque. Problème de redondance.
+\subsection{CBC}
+On chiffre une fois et au tour d'après, on XOR le plaintext avec le ciphertext précédent. Ainsi, on a alors une propagation en cas d'erreur. La propagation permet de garder l'intégrité du message.
+\subsection{CTS}
+CBC + Stealing.
+\subsection{XTX}
+XEX + Stealing. Potentiellement créé pour l'AES.
+\subsection{GCM}
+Deux parties : une de chiffrement (Counter mode) et une d'authentification.
+\subsection{OFB}
+Pas de propagation d'erreurs.
+
+\section{Le Data Encryption Standard (1975)}
+Le texte de clair subit en premier lieu une permutation initiale. On a ensuite 16 tours. Enfin, une permutation initiale inverse afin de fournir le chiffré.
+\paragraph{Exercice}~\\\par
+Etude des protocoles :
+\begin{itemize}
+ \item \textbf{TLS/SSL/HTTPS}
+ \item IPSEC
+ \item kerberos
+ \item zero knoledge
+ \item signature en aveugle (blind signature)
+ \item Secure multi party computation
+\end{itemize}
+Quelle est la partie chiffrement, authentification, gestion de clé, certificat, etc\ldots
+Un dizaine de slides par présentations (le premier puis un dans la liste).
