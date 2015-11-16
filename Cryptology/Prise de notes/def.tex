@@ -1,0 +1,25 @@
+\section{Terminologie basique}
+\begin{description}
+ \item[Code] Un code est une convention destinée à être diffusé le plus largement possible. Ce sont des conventions publiques, il n'y a pas de secret.
+ \item[Chiffre] Un chiffre est une convention qui est destinée à être diffusé le moins possible. La convention secrète est composé de une ou plusieurs clés.
+ \item[Chiffrement] C'est l'opération consistant à transformer un texte clair en une suite inintelligible d'apparence aléatoire (texte chiffré) en fonction d'un ou plusieurs éléments secrets (clés).
+ \item[Déchiffrement] C'est l'opération permettant d'accéder de façon légitime au texte clair en fonction de clés eventuelllement différentes de celles utilisées lors du chiffrement. On va trouver deux types de systèmes :
+    \begin{itemize}
+     \item Systèmes symétriques. La même clé est utilisée lors du chiffrement et du déchiffrement.
+     \item Systèmes asymétriques.
+    \end{itemize}
+ \item[Texte chiffré] 
+ \item[Clé] Paramètre secret fondamental qui intervient dans le processus de chiffrement.
+ \item[Substitution] Ce principe consiste au remplacement des caractères du texte en clair d'autres caractères.
+ \item[Transposition] Les caractères du texte en clair demeurent inchangés mais les positions respectives sont modifiées.
+ \item[Cryptosystème] C'est uns système qui comprend un algorithme de chiffrement, un algorithme de déchiffrement, un clair, un chiffré et une clé.
+ \item[Cryptanalyse] Opération consistant de manière illégitime à retrouver oar des méthodes mathématiques la ou les clés et le texte claur à partir du texte chiffré avec ou sans l'algorithme (encore appelé décryptement).
+ \item[Cryptanalyse appliquée] C'est l'opération identique que la cryptanalyse ; les méthodes utilisées sont de natures diverses et visent le système au niveau de son implémentation ou de sa gestion. Il y a plusieurs points à vérifier :
+    \begin{itemize}
+     \item L'implémentation (attaques par canaux cachés). On va retrouver différent système DPA, injection de fautes, etc\ldots (side channel attacks). On a ici des attaques logicielles et matérielle.
+     \item La gestion. La façon dont laquelle les clés sont gérées (taille, injection, etc\ldots).
+     \item Le risque humain.
+    \end{itemize}
+
+
+\end{description}

@@ -1,4 +1,68 @@
 \rhead{16/11/2015}
-\section{Titre}
-\subsection{Sous-titre}
-\subsubsection{Sous-sous-titre}
+\section{Introduction}
+Tous les états ont la copie des certificats des grands groupes (Google, Microsoft, etc\ldots).\\
+La cryptologie c'est la science du secret. Il faut savoir contre quoi et qui on se protège, et comment.\\
+Un système d'information est un système fonctionnant à l'électricité, traitant de l'information depuis sa création jusqu'à sa destruction.\\
+Un système d'information peut être soumis à deux types d'attaques :
+\begin{itemize}
+ \item Les actions naturelles, non malveillantes, non ciblés. On parle alors de sûreté.
+ \item La sécurité. On a ici un caractère ciblé, adaptatif, imprévisible.
+\end{itemize}
+Ici, on ne s'occupera que de la sécurité.On va parler de cryptographie dans la défense et de cryptanalyse dans l'attaque.\\
+Pour contrer les attaques, il va falloir protéger l'information. Pour cela, on va passer d'un réseau rouge (non chiffré) à un réseau noir (chiffré). On va ainsi parler de COMSEC (Communication Security). Ici le canal n'est pas sécurisé. Pour sécuriser aussi le canal, on va parler de TRANSEC\footnote{Transmission Security} comme avec la stéganographie.
+\subsection{Les acteurs de la cryptologie}
+Il y a un ou plusieurs émetteurs, un ou plusieurs destinataires. Cela se fait sur un canal ou un réseau public. Il peut y avoir un ou plusieurs intrus malveillants. Enfin, il peut y avoir un ou plusieurs messages.
+\section{Les menaces et solutions de la cryptologie}
+La cryptologie est partout.\\
+On va pouvoir retrouver quatre menaces :
+\begin{itemize}
+ \item Atteinte à la confidentialité des données. E va écouter A.
+ \item E envoie un message à B en se faisant passer par A. On a lors un problème d'identification et d'authentification.
+ \item E modifie un document. On a alors un problème d'intégrité.
+ \item A envoie un message à B puis le répudie. On a alors un problème de signature.
+\end{itemize}
+Il y a aussi des problèmes annexes tels que :
+\begin{itemize}
+ \item Les problèmes d'accusés de réception; d'émission
+ \item Les problèmes de falsification de la date de création d'un message, d'un problème d'horodatage.
+\end{itemize}
+Pour ces deux problèmes, on peut mettre en place des systèmes de vérification poussée. Cependant, au bout d'un moment, on doit se baser sur la confiance entre humains.\\
+On a aussi les problèmes TRANSEC : brouillage de communication, coupure de canal, A qui veut cacher l'envoie d'un message.
+\subsection{Les solutions}
+\begin{description}
+ \item[La confidentialité] Les données doivent rester initelligibles à toutes personnes non destinataires
+ \item[L'intégrité] 
+ \item[L'authentification] 
+ \item[La signature] 
+\end{description}
+\subsection{Le chiffrement}
+\subsubsection{Chiffrement symétrique}
+A et B ont la même clé secrète pour chiffrer et déchiffrer.\\
+Le problème reside dans la gestion de clés car A et B soivent avoir les clés au préalable de la communication.
+\paragraph{Chiffrement par flot}~\\\par
+Système qui opère individuellement sur chaque bit du clair en utilisant un transformation qui varie en fonction du bit d'entrée. C'est un système de chiffrement à la volé.\\
+On va beaucoup retrouver ce système de chiffrement dans les systèmes de communications.\\\par
+L'avantage de ce chiffrement est la rapidité. Son implémentation en terme de porte logique est beaucoup plus simple en électronique. Cela peut permettre un système de secret parfait.\\
+Le gros inconvéniant réside dans la mise en place et la distribution de clés. Le secret parfait est aussi difficile à réaliser (clé assez longue pour être de la même taille que le clair).
+\subsubsection{Chiffrement asymétrique}
+On va ici couper l'information (qui est longue) en blocs.\\
+Système qui divise le clair en blocs de taille fixe et chiffre un bloc à la fois. La taille des blocs est en général de 64 à 128 bits.\\
+Dans un système de chiffrement à clés publiques, chaque utilisateur dispose d'un couple de clés : une clé privée et une clé publique.\\
+La clé privée n'est connue que de l'utilisateur qui l'a créée.\\
+D'un point de vue mathématique, on utilise les fonctions mathématiques à sens unique avec trappe.
+\paragraph{Fonction à sens unique}~\\\par
+Une fonction $f:M\rightarrow C$ est une FSU si :
+\begin{itemize}
+ \item Connaissant $m\in M$, il est facile de calculer $f(m)$
+ \item Connaissant $f(m)$, il est difficile de trouver $m$
+\end{itemize}
+\paragraph{Fonctions avec trappe}~\\\par
+Une telle fonction $f$ est dite avec trappe, si de plus la connaissance de $f(m)$ est d'une information supplémentaire (clé privée) permet de retrouver $m$ facilement.\\
+La construction repose de ces fonctions repose sur des problèmes mathématiques dits très difficile : factorisation, résidu quadratique, logarithme discret, problèmes d’empilement, etc\ldots\\
+La sécurité de ces systèmes repose sur la supposition (non démontrée) qu'il existe des problèmes véritablement difficiles.\\\par
+L'avantage de ce chiffrement, il n'y a pas d'échange de clé nécessaire.\\
+Cependant, ce système est très lent et n'est que supposé sûr\footnote{Snowden dual Random Bit Generator}.
+\subsubsection{Les certificats}
+
+\subsubsection{Chiffrement hybride}
+On chiffre le message de manière symétrique. On chiffre la clé de manière asymétrique. On envoie les deux chiffrés (la clé chiffré en asymétrique et le message en symétrique).
