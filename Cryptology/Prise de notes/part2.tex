@@ -1,0 +1,61 @@
+\rhead{18/11/2015}
+\section{Introduction}
+La stéganographie amène plus de sécurité à la cryptographie. Le souci avec la cryptographie, c'est qu'on sait que le communication a lieu (incompréhensible). Avec la stéganographie, on va chercher à cacher le message dans un support anodin (invisible).\\
+La stéganalyse c'est l'attaque. Son but est de détecter s'il y a eu une communication secrète. On ne cherche pas à récupérer un message.
+\subsection{Watermarking}
+C'est une façon d'insérer une marque dans un support. Cette marque peut être visible ou invisible, robuste ou faible.\\
+Insérer des informations de l'acheteur dans une image (de manière invisible), c'est du fingerprinting.\\
+Une marque robuste ne va pas être sensible au crop, à la compression, au changement de format. Un watermark fragile va casser à chaque modification d'une image.
+\section{Stéganographie}
+\subsection{Problème du prisonnier}
+A et B son en prison. Ils veulent s'évader mais ne sont psa dans la même cellule. Il peuvent communiquer via un gardien. Il est alors impossible d'écrire des messages en clair, ni de la cryptographie sans que le gardien ai des doutes. Il vont alors utiliser de la stéganographie pour cacher les messages.\\
+Maintenant pour qu'Alice envoie un message à Bob, elle va devoir suivre ses différentes étapes :
+\begin{enumerate}
+ \item Encryption du texte qui nous donne un cyphertext. On ne met jamais un texte clair dans un fichier. On insère toujours notre flux dans une zone proche de l'aléa. Ainsi le cyphertext sera invisible.
+ \item On va insérer le texte. Pour cela, il nous faut 3 éléments : le cypherText, un cover medium et une clé stégano. On va alors avoir le stego medium.\\La clé stégano est, de manière générale, symétrique. Elle va permettre de savoir où chercher dans l'image. Elle va créer une permutation et va donner les positions d'insertion du message.
+\end{enumerate}
+\subsection{Définitions}
+\begin{description}
+ \item[Message :] cypherText de $N_M$ bits
+ \item[Cover file :] support de communication avec $N_C$ élément modifiables pour ne pas \enquote{pourrir} mon support.
+ \item[Taux d'insertion :] $\frac{N_M}{N_C}$
+\end{description}
+\subsection{Types d'insertion}
+\subsubsection{Cover modification}
+On insère des bits dans les bits de données de l'image.
+\subsubsection{Cover selection}
+On cherche une source qui contient directement l'information dans son image (algorithme de Hopper). On a alors une image non modifiée.
+\subsubsection{Cover synthesis}
+A partir du message, on à la possibilité de générer un support anodin contenant l'image. Pour le moment, ce n'est pas encore faisable.
+\subsection{Types de données}
+\subsubsection{Compressées}
+\begin{description}
+ \item[Images] JPEG
+ \item[Sons] MP3, WMA, Ogg
+ \item[Vidéos] M-JPEG, MPEG, DivX, etc\ldots
+\end{description}
+\subsubsection{Non Compressées}
+\begin{description}
+ \item[Images] BMP, RAW, PNG, GIF
+ \item[Sons] WAV, PCM
+ \item[Vidéos] impossible (trop gros)
+\end{description}
+\subsubsection{Autre}
+Dans les documents (textes, pdf), pages web, programmes (codes sources), protocoles réseaux (champs non utilisés, VoIP, etc\ldots).
+\subsection{Acquisition de l'image}
+Dans une image, le header est composé des informations de l'image et d'une palette. La paletter fait l'association entre une valeur en 3 octets (RGB) à une valeur d'un octets. On fait alors le lien entre les valeur des pixels et la palette.\\
+Pour cacher de l'information, on peut mettre des commentaires. Ce n'est pas caché de manière importante.\\
+On peut modifier les pixels. On peut aussi faire des permutation sur la palette. C'est la permutation de la palette qui va mettre le message. Ça ne modifiera pas l'image mais en analysant la palette, on se rend compte que la palette n'est pas ordonnancée de manière logique.
+\subsection{Pixel modification : LSB replacing}
+LSB : Least Significant Bits. On fait un LSB des valeurs de pixels qui ont l'air random.\\
+Le LSB replacing fonctionne bien pour des petits fichiers.
+\subsection{Format JPEG}
+On part d'une image RGB, on la compresse.\\
+On va changer l'espace colorimétrique. On va passer du RGB au YCbCr car l'œil humain est plus sensible au vert qu'au bleu et qu'au rouge.\\
+On fait ensuite un sous-échantillonnage (perte de données, irréversible).\\
+On fait ensuite une DCT\footnote{Discrete Cosine Transform}. Cela transforme une image en une somme de fréquences.\\
+Une fois que l'on a la matrice des fréquences, on réalise une quantification. Plus on va choisir une quantification élevée, plus on va perdre de l'information.\\
+A ce niveau la, on va retrouver beaucoup de 0 dans notre fichier. On va vouloir utiliser l'algorithme RLE pour la compression. On fait un parcours en zigzag afin de lire les coefficients supérieurs à 0 en premier. Un fois que nous avons notre suite, nous pouvons appliquer RLC. On va ensuite produire un arbre de Huffman pour chaque bloc BCT.\\
+Afin d'insérer un message, il n'est seulement possible d'insérer notre message après la quantification.
+\section{Stéganalyse}
+Cela sert à détecter une communication secrète. Parmi un échantillon récupéré, on cherche s'il y a des cover et des stégo.
