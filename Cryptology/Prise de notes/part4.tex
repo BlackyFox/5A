@@ -1,0 +1,22 @@
+\rhead{19/11/2015}
+\section{Principe des attaques par corrélation}
+\begin{algorithm}[H]
+    \For{init $I\in R_1$}{
+    Initialiser $R_1$ avec $I$\\
+    Produire autant de bits ($N$) qu'il y a de cryptogrammes\\
+    Calculer $Z_I=\sum_{i=1}^{k+1}\left(x_i^\bot\oplus c_T\oplus 1\right)$\\
+    Stocker $I$ et $Z_I$
+    }
+    Trier selon les $Z_I$
+\end{algorithm}
+On a ensuite deux cas possibles :\\~\\
+\begin{minipage}{.49\textwidth}
+$I$ n'est pas le bon init\\
+$Z_I \rightarrow \mathscr{N}\left(\frac{N}{2},\frac{\sqrt{N}}{2}\right)$
+\end{minipage}
+~
+\begin{minipage}{.49\textwidth}
+$I$ est le bon init\\
+$Z_I \rightarrow \mathscr{N}\left(P_T.N,\sqrt{NP_T(1-P_T)}\right)$
+\end{minipage}
+
