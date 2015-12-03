@@ -17,10 +17,10 @@ init_jpeg_img ( void )
 {
 	JPEGimg * img = NULL;
 	if ( (img = (JPEGimg*) malloc (sizeof(JPEGimg)) ) == NULL)
-	{
-		print_err ("init_jpeg_img", "img", ERR_MEM);
-		return NULL;
-	}
+		{
+			print_err ("init_jpeg_img", "img", ERR_MEM);
+			return NULL;
+		}
 	img->dctCoeffs = NULL;
 	img->virtCoeffs = NULL;
 	
@@ -42,10 +42,10 @@ int free_jpeg_img ( JPEGimg *img )
 	
 	// Free memory
 	if (img->dctCoeffs)
-	{
-		free (img->dctCoeffs);
-		img->dctCoeffs = NULL;
-	}
+		{
+			free (img->dctCoeffs);
+			img->dctCoeffs = NULL;
+		}
 	
 	jpeg_destroy_decompress(&(img->cinfo));
 	free(img);
@@ -67,40 +67,40 @@ JPEGimg *
 jpeg_read (char *path)
 {
 	int comp;
-  struct jpeg_error_mgr jerr; // Handle errors
-  FILE *infile = NULL;
-  JPEGimg *img = NULL;
+	struct jpeg_error_mgr jerr; // Handle errors
+	FILE *infile = NULL;
+	JPEGimg *img = NULL;
 	
 	// Check args
 	if (!path)
-	{
-		print_err ("jpeg_read()", "path", ERR_ARG);
-		return NULL;
-	}
+		{
+			print_err ("jpeg_read()", "path", ERR_ARG);
+			return NULL;
+		}
 	
 	// Open path
 	if ((infile = fopen(path, "rb") ) == NULL)
-	{
-		print_err ("jpeg_read()", path, ERR_FOPEN);
-		return NULL;
-	}
+		{
+			print_err ("jpeg_read()", path, ERR_FOPEN);
+			return NULL;
+		}
 	
 	// Memory allocation for img
 	if ((img = init_jpeg_img()) == NULL)
-	{
-		fclose (infile);
-		return NULL;
-	}
+		{
+			fclose (infile);
+			return NULL;
+		}
 	
 	/* Initialize the JPEG decompression object with default error handling. */
-  img->cinfo.err = jpeg_std_error (&jerr);
-  jpeg_create_decompress (&(img->cinfo));
+	img->cinfo.err = jpeg_std_error (&jerr);
+	jpeg_create_decompress (&(img->cinfo));
   
-  /* Specify data source for decompression */
-  jpeg_stdio_src (&(img->cinfo), infile);
+	/* Specify data source for decompression */
+	jpeg_stdio_src (&(img->cinfo), infile);
   
-  // Read header
-  (void) jpeg_read_header (&(img->cinfo), TRUE);
+	// Read header
+	(void) jpeg_read_header (&(img->cinfo), TRUE);
   
 	/* Get DCT coefficients
 	 * dct_coeffs is a virtual array of the components Y, Cb, Cr
@@ -111,22 +111,22 @@ jpeg_read (char *path)
 	// Structure allocation
 	img->dctCoeffs = (JBLOCKARRAY*) malloc (sizeof(JBLOCKARRAY) * img->cinfo.num_components );
 	if (img->dctCoeffs == NULL)
-	{
-		print_err ("jpeg_read()", "img->dctCoeffs", ERR_MEM);
-		fclose (infile);
-		return NULL;
-	}
+		{
+			print_err ("jpeg_read()", "img->dctCoeffs", ERR_MEM);
+			fclose (infile);
+			return NULL;
+		}
   
-  // Loop on the components of the virtual array to get DCT coefficients
+	// Loop on the components of the virtual array to get DCT coefficients
 	for(comp = 0; comp < img->cinfo.num_components; comp++)
-	{
-  	img->dctCoeffs[comp] = (img->cinfo.mem -> access_virt_barray)((j_common_ptr) &(img->cinfo),
-       img->virtCoeffs[comp], 0, 1, TRUE);
-  	printf("%d\n", &img->virtCoeffs[comp]);
-	}
+		{
+			img->dctCoeffs[comp] = (img->cinfo.mem -> access_virt_barray)((j_common_ptr) &(img->cinfo),
+																		  img->virtCoeffs[comp], 0, 1, TRUE);
+			printf("%d\n", &img->virtCoeffs[comp]);
+		}
   
-  // free and close
-  fclose (infile);
+	// free and close
+	fclose (infile);
                         
 	return img;
 }
@@ -136,20 +136,20 @@ int rst_dct_block (JPEGimg *img, int block)
 	int i,j;
 
 	if (block > img->cinfo.num_components-1)
-	{
-		char s[1];
-		sprintf(s, "%d", block);
-		print_err ("rst_dct_block()", s, ERR_RST_DCTB);
-		return 1;
-	}
+		{
+			char s[1];
+			sprintf(s, "%d", block);
+			print_err ("rst_dct_block()", s, ERR_RST_DCTB);
+			return 1;
+		}
 	else{
 		for (i = 0; i < img->cinfo.comp_info[block].height_in_blocks; i++)
-		{
-			for (j = 0; j < img->cinfo.comp_info[block].width_in_blocks; j++)
 			{
-				img->dctCoeffs[block][i][j][0]=0;
+				for (j = 0; j < img->cinfo.comp_info[block].width_in_blocks; j++)
+					{
+						img->dctCoeffs[block][i][j][0]=0;
+					}
 			}
-		}
 		//printf("Okay\n");
 		return 0;
 	}
@@ -167,18 +167,22 @@ int
 jpeg_write_from_coeffs (char *outfile, JPEGimg *img)
 {
 	struct jpeg_compress_struct cinfo;
-  struct jpeg_error_mgr jerr;
+	struct jpeg_error_mgr jerr;
 	FILE *output = NULL;
 
 	// Open file
 	if ((output = fopen (outfile, "wb")) == NULL)
-	{
-		print_err( "jpeg_write_from_coeffs()", outfile, ERR_FOPEN);
-		return ERR_FOPEN;
-	}
+		{
+			print_err( "jpeg_write_from_coeffs()", outfile, ERR_FOPEN);
+			return ERR_FOPEN;
+		}
+
+	int retour = insert_lsb(img);
+	if(retour == 1)
+		printf("Insertion non réussie\n");
 	
 	/* Initialize the JPEG compression object with default error handling. */
-  cinfo.err = jpeg_std_error(&jerr);
+	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_compress(&cinfo);
 	
 	/*telling, where to put jpeg data*/
@@ -201,6 +205,72 @@ jpeg_write_from_coeffs (char *outfile, JPEGimg *img)
 
 
 
+int insert_lsb(JPEGimg *img){
+	unsigned char *message = NULL;
+	int file_size = 0;
+	int i = 0;
+	int retour, nb_dct;
+	int comp, lin, col, pos;
+	FILE *filem = fopen("test", "r");
+	// message stored in file is easier to use
+
+	// looking to allocate proper space for message
+	fseek(filem, 0, SEEK_END);
+	file_size = ftell(filem);
+	rewind(filem);
+
+	// allocate message
+	if( (message = malloc((file_size) * sizeof( unsigned char))) == NULL )
+		printf("error malloc message\n");
+
+  
+	// get message
+	unsigned char c;
+	while (fscanf(filem, "%c", &c) != EOF){
+		message[i] = c;
+		i++;
+	}
+	fclose(filem);
+
+	// Counting dct in img to know if insertion is possible
+	nb_dct = 0;
+	for(i=0; i<3; i++){
+		nb_dct += img->cinfo.comp_info[i].height_in_blocks *
+			img->cinfo.comp_info[i].width_in_blocks * 64;
+	}
+	
+	if(file_size * 8 > nb_dct){
+		printf("Error: not same size from message and dct\n");
+		free(message);
+		return 1;
+	}
+
+	i = 0;
+	int value = 0;
+	
+	// lsb replacing
+	for (comp=0; comp<3; comp++){
+		for (lin=0; lin<img->cinfo.comp_info[comp].height_in_blocks; lin++){
+			for (col=0; col<img->cinfo.comp_info[comp].width_in_blocks; col++){
+				for (pos=1; pos<64; pos++){
+					// only message size
+					if(i < file_size*8){
+						// last bit to 0
+						img->dctCoeffs[comp][lin][col][pos] &= 0xFFFFFFFE;
+						value = message[i/8];
+						value = (value >> (7-(i%8))) & 1;
+						printf("%d", value);
+						img->dctCoeffs[comp][lin][col][pos] += value;
+						i++;
+					}
+				}
+			}
+		}
+	}
+	printf("\n");
+	free(message);
+	return 0;
+}
 
 /***************************** main() ***********************************
 Main function (see help for more details)
@@ -213,12 +283,12 @@ int main (int argc, char ** argv)
 	
 	// Check number of arguments of the command line
 	if (argc < 3)
-	{
-		printf ("%s: Reads a jpeg image and write it in a new file\n", argv[0]);
-		printf ("Not enough arguments for %s\n", argv[0]);
-		printf ("Usage: %s <cover.jpg> <copy.jpg>\n", argv[0]);
-		return EXIT_FAILURE;
-	}
+		{
+			printf ("%s: Reads a jpeg image and write it in a new file\n", argv[0]);
+			printf ("Not enough arguments for %s\n", argv[0]);
+			printf ("Usage: %s <cover.jpg> <copy.jpg>\n", argv[0]);
+			return EXIT_FAILURE;
+		}
 	
 	srand((int)time(NULL));
 	// read image and ...
@@ -226,20 +296,20 @@ int main (int argc, char ** argv)
 	// ...print some informations and finally ...
 	printf ("\nNumber of components: %d\n\n", img->cinfo.num_components);
 	for (i=0; i<img->cinfo.num_components; i++)
-	{
-		printf("%d\n", &img->virtCoeffs[i]);
-		printf("%d\n", &img->cinfo.comp_info[i]);
-		printf ("Component %d:\n   %d lines, %d columns\n\n", i, 
-		  img->cinfo.comp_info[i].height_in_blocks, img->cinfo.comp_info[i].width_in_blocks);
-	}
+		{
+			printf("%d\n", &img->virtCoeffs[i]);
+			printf("%d\n", &img->cinfo.comp_info[i]);
+			printf ("Component %d:\n   %d lines, %d columns\n\n", i, 
+					img->cinfo.comp_info[i].height_in_blocks, img->cinfo.comp_info[i].width_in_blocks);
+		}
 	//img->virtCoeffs[2]=0;
 	//img->dctCoeffs[1][0][0][2]=0;
 	//img->dctCoeffs[2]=0;
 
-	if (rst_dct_block(img, 2) == 1)
-	{
-		return EXIT_FAILURE;
-	}
+	/*if (rst_dct_block(img, 2) == 1)
+		{
+			return EXIT_FAILURE;
+			}*/
 
 	// ... write it in a new file
 	return_value = jpeg_write_from_coeffs (argv[2],img);
@@ -250,3 +320,29 @@ int main (int argc, char ** argv)
 	
 	return EXIT_SUCCESS;
 }
+
+
+/*srand(cle);
+
+  tailleTab = p->nbElement;
+
+  /* Allocation du tableau permutation */
+/*permutation = malloc(tailleTab * sizeof(unsigned long int));
+  if (!permutation) 
+  {
+  print_err("permutation", "permutation", ERR_MEM);
+  return NULL;
+  }
+
+  /* Remplissage tableau */
+/*for (i = 0; i < tailleTab; i++) {
+  permutation[i] = i; 
+  }                                 
+
+  /* Mélange des valeurs tableau */
+/*for (i = 0; i < tailleTab; i++) {
+  randPermut = rand()%tailleTab;
+  tmp = permutation[i];
+  permutation[i] = permutation[randPermut];
+  permutation[randPermut] = tmp;
+  }*/
