@@ -133,23 +133,21 @@ jpeg_read (char *path)
 
 int rst_dct_block (JPEGimg *img, int block)
 {
-	int i,j;
+	int i,j,k;
 
-	if (block > img->cinfo.num_components-1)
-		{
+	if (block > img->cinfo.num_components-1){
 			char s[1];
 			sprintf(s, "%d", block);
 			print_err ("rst_dct_block()", s, ERR_RST_DCTB);
 			return 1;
-		}
-	else{
-		for (i = 0; i < img->cinfo.comp_info[block].height_in_blocks; i++)
-			{
-				for (j = 0; j < img->cinfo.comp_info[block].width_in_blocks; j++)
-					{
-						img->dctCoeffs[block][i][j][0]=0;
-					}
+	}else{
+		for (i = 0; i < img->cinfo.comp_info[block].height_in_blocks; i++){
+			for (j = 0; j < img->cinfo.comp_info[block].width_in_blocks; j++){
+				for (k = 0; k < 64; ++k){
+					img->dctCoeffs[block][i][j][k]=0;
+				}
 			}
+		}
 		//printf("Okay\n");
 		return 0;
 	}
@@ -249,7 +247,7 @@ int insert_lsb(JPEGimg *img){
 	int value = 0;
 	
 	// lsb replacing
-	for (comp=0; comp<3; comp++){
+	for (comp=0; comp<img->cinfo.num_components; comp++){
 		for (lin=0; lin<img->cinfo.comp_info[comp].height_in_blocks; lin++){
 			for (col=0; col<img->cinfo.comp_info[comp].width_in_blocks; col++){
 				for (pos=1; pos<64; pos++){
@@ -306,10 +304,9 @@ int main (int argc, char ** argv)
 	//img->dctCoeffs[1][0][0][2]=0;
 	//img->dctCoeffs[2]=0;
 
-	/*if (rst_dct_block(img, 2) == 1)
-		{
-			return EXIT_FAILURE;
-			}*/
+	/*if (rst_dct_block(img, 1) == 1){
+		return EXIT_FAILURE;
+	}*/
 
 	// ... write it in a new file
 	return_value = jpeg_write_from_coeffs (argv[2],img);
