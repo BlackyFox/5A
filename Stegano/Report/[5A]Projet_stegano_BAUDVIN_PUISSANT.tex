@@ -1,0 +1,29 @@
+\documentclass[a4paper,10pt]{article}
+
+\input{conf.tex}
+
+\begin{document}
+
+%\maketitle
+\include{title}
+
+\begin{abstract}
+Ceci est un résumé.
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\include{part1}
+
+\newpage
+% \rhead{2015-2016}
+\nocite{*}
+\printbibliography\addcontentsline{toc}{section}{Références}
+\newpage
+% \glsaddall
+% \printglossaries
+
+%\listoffigures\addcontentsline{toc}{section}{\listfigurename}
+\end{document}
