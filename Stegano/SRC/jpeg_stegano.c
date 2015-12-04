@@ -208,7 +208,9 @@ int insert_lsb(JPEGimg *img){
 	int file_size = 0;
 	int i = 0;
 	int retour, nb_dct;
+	unsigned long int tmp, randomV;
 	int comp, lin, col, pos;
+	unsigned long int* perm_array = NULL;
 	FILE *filem = fopen("test", "r");
 	// message stored in file is easier to use
 
@@ -230,11 +232,41 @@ int insert_lsb(JPEGimg *img){
 	}
 	fclose(filem);
 
+
 	// Counting dct in img to know if insertion is possible
 	nb_dct = 0;
 	for(i=0; i<3; i++){
 		nb_dct += img->cinfo.comp_info[i].height_in_blocks *
 			img->cinfo.comp_info[i].width_in_blocks * 64;
+	}
+
+		// Get key
+	printf("Do you want to encrypt with a key (0 for none)?\n");
+	int key = 0;
+	retour = scanf("%d", &key);
+
+	if(key != 0){
+		// random init
+		srand(key);
+
+		// Allocate permutation array
+		if((perm_array = malloc((nb_dct)*sizeof(unsigned long int))) ==
+		   NULL){
+			printf("Error allocating permutation array\n");
+			return 2;
+		}
+
+		// Filling array
+		for(i = 0; i < file_size; i++)
+			perm_array[i] = i;
+		
+		// Randomize array values
+		for(i = 0; i < nb_dct; i++){
+			randomV = rand()%nb_dct;
+			tmp = perm_array[i];
+			perm_array[i] = perm_array[randomV];
+			perm_array[randomV] = tmp;
+		}
 	}
 	
 	if(file_size * 8 > nb_dct){
@@ -245,22 +277,43 @@ int insert_lsb(JPEGimg *img){
 
 	i = 0;
 	int value = 0;
+	int count = 0;
 	
 	// lsb replacing
 	for (comp=0; comp<img->cinfo.num_components; comp++){
 		for (lin=0; lin<img->cinfo.comp_info[comp].height_in_blocks; lin++){
 			for (col=0; col<img->cinfo.comp_info[comp].width_in_blocks; col++){
 				for (pos=1; pos<64; pos++){
+					count++;
 					// only message size
-					if(i < file_size*8){
-						// last bit to 0
-						img->dctCoeffs[comp][lin][col][pos] &= 0xFFFFFFFE;
-						value = message[i/8];
-						value = (value >> (7-(i%8))) & 1;
-						printf("%d", value);
-						img->dctCoeffs[comp][lin][col][pos] += value;
-						i++;
+					if(key != 0 && count == perm_array[i]){
+						if(i < file_size*8){
+							// last bit to 0
+							img->dctCoeffs[comp][lin][col][pos] &= 0xFFFFFFFE;
+							value = message[i/8];
+							value = (value >> (7-(i%8))) & 1;
+							img->dctCoeffs[comp][lin][col][pos] += value;
+							i++;
+						}
+						// reset
+						comp = 0;
+						lin = 0;
+						col = 0;
+						pos = 1;
 					}
+					else{
+						if(i < file_size*8){
+							// last bit to 0
+							img->dctCoeffs[comp][lin][col][pos] &= 0xFFFFFFFE;
+							value = message[i/8];
+							value = (value >> (7-(i%8))) & 1;
+							img->dctCoeffs[comp][lin][col][pos] += value;
+							i++;
+						}
+					}
+					// All message has been inserted, nothing to do more
+					if( i >= file_size*8)
+						break;
 				}
 			}
 		}
@@ -319,27 +372,3 @@ int main (int argc, char ** argv)
 }
 
 
-/*srand(cle);
-
-  tailleTab = p->nbElement;
-
-  /* Allocation du tableau permutation */
-/*permutation = malloc(tailleTab * sizeof(unsigned long int));
-  if (!permutation) 
-  {
-  print_err("permutation", "permutation", ERR_MEM);
-  return NULL;
-  }
-
-  /* Remplissage tableau */
-/*for (i = 0; i < tailleTab; i++) {
-  permutation[i] = i; 
-  }                                 
-
-  /* Mélange des valeurs tableau */
-/*for (i = 0; i < tailleTab; i++) {
-  randPermut = rand()%tailleTab;
-  tmp = permutation[i];
-  permutation[i] = permutation[randPermut];
-  permutation[randPermut] = tmp;
-  }*/
