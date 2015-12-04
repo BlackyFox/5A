@@ -153,56 +153,6 @@ int rst_dct_block (JPEGimg *img, int block)
 	}
 }
 
-/******************** jpeg_write_from_coeffs() **************************
-Write a jpeg image from its DCT coeffs
-Returns EXIT_SUCCESS, 
-        a negative value in case of error
-
-ARGS: char *outfile: Path of the new image
-      JPEGimg *img:  Structure containing DCT coeffs and infos of the image
-************************************************************************/
-int 
-jpeg_write_from_coeffs (char *outfile, JPEGimg *img)
-{
-	struct jpeg_compress_struct cinfo;
-	struct jpeg_error_mgr jerr;
-	FILE *output = NULL;
-
-	// Open file
-	if ((output = fopen (outfile, "wb")) == NULL)
-		{
-			print_err( "jpeg_write_from_coeffs()", outfile, ERR_FOPEN);
-			return ERR_FOPEN;
-		}
-
-	int retour = insert_lsb(img);
-	if(retour == 1)
-		printf("Insertion non réussie\n");
-	
-	/* Initialize the JPEG compression object with default error handling. */
-	cinfo.err = jpeg_std_error(&jerr);
-	jpeg_create_compress(&cinfo);
-	
-	/*telling, where to put jpeg data*/
-	jpeg_stdio_dest(&cinfo, output);
-
-	/* Applying parameters from source jpeg */
-	jpeg_copy_critical_parameters(&(img->cinfo), &cinfo);
-
-	/* copying DCT */
-	jpeg_write_coefficients(&cinfo, img->virtCoeffs);
-
-	/*clean-up*/
-	jpeg_finish_compress(&cinfo);
-	jpeg_destroy_compress(&cinfo);
-	fclose (output);
-	
-	/*Done!*/
-	return EXIT_SUCCESS;
-}
-
-
-
 int insert_lsb(JPEGimg *img){
 	unsigned char *message = NULL;
 	int file_size = 0;
@@ -257,7 +207,7 @@ int insert_lsb(JPEGimg *img){
 		}
 
 		// Filling array
-		for(i = 0; i < file_size; i++)
+		for(i = 0; i < nb_dct; i++)
 			perm_array[i] = i;
 		
 		// Randomize array values
@@ -321,6 +271,55 @@ int insert_lsb(JPEGimg *img){
 	printf("\n");
 	free(message);
 	return 0;
+}
+
+
+/******************** jpeg_write_from_coeffs() **************************
+Write a jpeg image from its DCT coeffs
+Returns EXIT_SUCCESS, 
+        a negative value in case of error
+
+ARGS: char *outfile: Path of the new image
+      JPEGimg *img:  Structure containing DCT coeffs and infos of the image
+************************************************************************/
+int 
+jpeg_write_from_coeffs (char *outfile, JPEGimg *img)
+{
+	struct jpeg_compress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+	FILE *output = NULL;
+
+	// Open file
+	if ((output = fopen (outfile, "wb")) == NULL)
+		{
+			print_err( "jpeg_write_from_coeffs()", outfile, ERR_FOPEN);
+			return ERR_FOPEN;
+		}
+
+	int retour = insert_lsb(img);
+	if(retour == 1)
+		printf("Insertion non réussie\n");
+	
+	/* Initialize the JPEG compression object with default error handling. */
+	cinfo.err = jpeg_std_error(&jerr);
+	jpeg_create_compress(&cinfo);
+	
+	/*telling, where to put jpeg data*/
+	jpeg_stdio_dest(&cinfo, output);
+
+	/* Applying parameters from source jpeg */
+	jpeg_copy_critical_parameters(&(img->cinfo), &cinfo);
+
+	/* copying DCT */
+	jpeg_write_coefficients(&cinfo, img->virtCoeffs);
+
+	/*clean-up*/
+	jpeg_finish_compress(&cinfo);
+	jpeg_destroy_compress(&cinfo);
+	fclose (output);
+	
+	/*Done!*/
+	return EXIT_SUCCESS;
 }
 
 /***************************** main() ***********************************
