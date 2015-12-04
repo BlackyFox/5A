@@ -153,6 +153,30 @@ int rst_dct_block (JPEGimg *img, int block)
 	}
 }
 
+
+void get_histo (JPEGimg *img, char* filename)
+{
+	char* dct_histo[255] = {0};
+	FILE *filehisto = fopen(filename, "w");
+	int comp, lin, col, pos, i;
+
+	for (comp=0; comp<img->cinfo.num_components; comp++){
+		for (lin=0; lin<img->cinfo.comp_info[comp].height_in_blocks; lin++){
+			for (col=0; col<img->cinfo.comp_info[comp].width_in_blocks; col++){
+				for (pos=1; pos<64; pos++){
+					dct_histo[img->dctCoeffs[comp][lin][col][pos]+128]++;
+				}
+			}
+		}
+	}
+
+		for (i = 0; i < 255; ++i)
+	{
+		fprintf(filehisto, "%d\n", dct_histo[i]);
+	}
+	fclose(filehisto);
+}
+
 int insert_lsb(JPEGimg *img){
 	unsigned char *message = NULL;
 	int file_size = 0;
@@ -295,11 +319,14 @@ jpeg_write_from_coeffs (char *outfile, JPEGimg *img)
 			print_err( "jpeg_write_from_coeffs()", outfile, ERR_FOPEN);
 			return ERR_FOPEN;
 		}
+	
+	get_histo(img, "histo_ori.txt");
 
 	int retour = insert_lsb(img);
 	if(retour == 1)
 		printf("Insertion non réussie\n");
 	
+	get_histo(img, "histo_ste.txt");
 	/* Initialize the JPEG compression object with default error handling. */
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_compress(&cinfo);
