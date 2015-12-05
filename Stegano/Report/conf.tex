@@ -22,6 +22,8 @@
 
 \newcommand{\heading}[1]{\multicolumn{1}{c}{#1}}
 
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+
 \lstdefinestyle{customc}{
   belowcaptionskip=1\baselineskip,
   breaklines=true,
@@ -34,6 +36,9 @@
   commentstyle=\itshape\color{purple!40!black},
   identifierstyle=\color{blue},
   stringstyle=\color{orange},
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=10pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
 }
 
 \lstdefinestyle{customasm}{
