@@ -1,0 +1,26 @@
+\documentclass[a4paper,10pt]{article}
+
+\input{conf.tex}
+
+\begin{document}
+
+%\maketitle
+\include{title}
+
+\begin{abstract}
+Ceci est le résumé
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
+\include{part1}
+
+\newpage
+\rhead{2014-2015}
+\nocite{*}
+\printbibliography\addcontentsline{toc}{section}{Références}
+
+%\listoffigures\addcontentsline{toc}{section}{\listfigurename}
+\end{document}

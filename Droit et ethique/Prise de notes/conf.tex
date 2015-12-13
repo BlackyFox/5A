@@ -1,0 +1,64 @@
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[none]{hyphenat}
+%\usepackage[french=nohyphenation]{hyphsubst}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{spverbatim}
+\usepackage{xcolor}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage[]{algorithm2e}
+\usepackage[mathscr]{euscript}
+
+\captionsetup{justification=centering}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstdefinestyle{custombash}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=bash,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+}
+
+\lstset{escapechar=@}
+
+\lhead{Antoine Puissant}
+\chead{Cryptology}
+\rhead{2015-2016}
+
+\pagestyle{fancy}
+
+\sloppy
+
+\addbibresource{biblio.bib}
