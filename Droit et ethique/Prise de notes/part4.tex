@@ -1,0 +1,49 @@
+\rhead{16/12/2015}
+\section{Signaux Parasites Compromettants (SPC)}
+Les signaux parasites compromettant est une activité liée quasiment qu'aux activités de l’État et fait pour ce dernier. Ce n'est pas un domaine mis en œuvre par le secteur privé.\\
+Il y a deux objectifs à la prévention de ces signaux :
+\begin{enumerate}[label=\Roman*.]
+ \item Tous les système électroniques rayonne. Il est ainsi possible avec une étude approfondie de récupérer les données émises par les systèmes. Ainsi, quand on traite des informations classifiées de Défense, il faut se protéger que nos données soient récupérée par des tiers.
+ \item On veut se protéger que les informations sortent du système mais aussi qu'elles rentrent dans le système. On cherche alors à se protéger des bombes IEM\footnote{Bombes à Impulsions Électro-Magnétique (bombe nucléaire explosant à 20km d'altitude pour subir les dégâts matériels)}.
+\end{enumerate}
+\subsection{Origine du problème}
+Tout équipement électronique rayonne. Il existe ainsi deux normes afin d'être certain de ne pas nuire à l'utilisation :
+\begin{enumerate}[label=\Roman*.]
+ \item La Compatibilité Electro Magnétique. Celle-ci (estampillée C.E. pour la loi européenne, N.F. pour la France) assure de ne pas \enquote{déranger} les autres appareils dans son environnement initial. C'est le niveau minimal que tout appareil doit avoir pour être vendu au grand public.
+ \item TEMPEST
+\end{enumerate}
+\subsubsection{Compatibilité Électro Magnétique (C.E.M.)}
+Pour une salle, on retrouve un protection \textit{cage de Faraday}. Afin de vérifier qu'un équipement, on va retrouver les chambres anéchoïque.\\
+Dès que l'on a un changement d'état dans un composant, nous pouvons retrouver un signal carré. Il est alors possible de reconstituer l'information contenue dans les ondes électromagnétiques transmises. Par exemple, avec les ondes émises par des écrans cathodiques, il est possible de capter l'information affichée jusqu'à 500m. Pour les écrans LCD, c'est plus complexe. Il est cependant possible de trouver un point de rayonnement lors de la connexion entre la sortie vidéo et le câble vidéo. Il est alors possible de récupérer de l'information jusqu'à 100m.\\\par
+Il est aussi possible de récupérer de l'information par conduction (et non par rayonnement). Ici, on peut récupérer l'information via des fils électriques, des canalisations d'eau etc\ldots
+\subsubsection{T.E.M.P.E.S.T.}
+Ainsi, lorsque l'on met en place des systèmes traitant des information sensibles classifiées, il faut faire attention à quatre choses :
+\begin{enumerate}
+ \item Le transport des équipements (dans les aéroports par exemple)
+ \item L'installation des équipements doit être fait dans un milieu sécurisé et fiable
+ \item La maintenance des équipements doit être sous surveillance afin de ne pas introduire des systèmes intrusifs ou maintenir le système pour vérifier sa fiabilité.
+ \item Le stockage des équipements doit être fait selon des normes.
+\end{enumerate}
+Il existe une norme réalisée par l'OTAN définissant les normes des vis-vis des SPC (filtrer pour la conduction et blinder pour le rayonnement), la norme TEMPEST\footnote{Telecommunications Electronics Material Protected from Emanating Spurious Transmissions}.\\
+On va retrouver quatre catégories de norme TEMPEST :
+\begin{description}
+ \item[Catégorie A] SDIP-27 niveau A (zone 0 : proximité immédiate -- 1m)
+ \item[Catégorie B] SDIP-27 niveau B (zone 1 : 20m)
+ \item[Catégorie C] SDIP-27 niveau C (zone 2 : 100m)
+ \item[Catégorie D] Autre que A, B ou C (grand public)
+\end{description}
+Afin de se protéger du rayonnement, il existe le système de cage de Faraday. Cependant, il faut prendre en compte les contraintes que la cage de Faraday opérationnelle doit avoir :
+\begin{itemize}
+ \item La porte permettant au personnel d'entrer
+ \item L'arrivée et la sortie d'air
+ \item Les entrées de câbles réseau et alimentation
+ \item etc\ldots
+\end{itemize}
+Dans ces genres de cages, il n'est pas prévu d'y rester plus d'une heure, une heure trente pour les cages non habitables (cages en acier)\footnote{Coupé de toutes ondes électromagnétiques classique, le corps humain perd ses repères}. Pour les cages habitables, nous pouvons retrouver un système de feuillage en cuivre avec des systèmes de sas pneumatiques.\\
+Enfin, on peut retrouver des cages modulaires qui peuvent être amenée sur le terrain (en aluminium). C'est l'officier du chiffre qui va être dans ces cages sur le terrain.\\
+Tous les ans, il faut contrôler les peignes (partie d'ouverture de la cage) afin d'être sûr de l'étanchéité de la cage.\\
+Pour faire rentrer l'air, on va calculer les longueurs d'ondes qui n'influence pas les systèmes (en entrée ou sortie) et on met en place des systèmes en \textit{nid d'abeille} dont les trous ont la taille des longueurs d'ondes non importante.\\
+Dans ces trous, il est aussi possible de faire passer des fibres optiques.\\
+Pour le courant, nous devons le filtrer. On va alors passer par des filtreur qui permettent d'isoler l'intérieur et l'extérieur. Pour les autres systèmes filaire (réseau et alimentation non 220V), il faut filtrer aussi, mais différemment, sans utiliser le même système que l'alimentation.\\
+Enfin, pour les canalisation d'eau, on va mettre en place des systèmes de \textit{bypass}. Pour cela, il est possible de mettre des manchons de canalisation en caoutchouc ou plastique ne transmettant pas l'information comme l'acier.\\
+Enfin, il faut prendre en compte les zones de couplage. Un équipement, même TEMPEST, rayonne. Si on approche un autre appareil rayonnant près de ce dernier, il devient un relais de rayonnement. Il est alors interdit de s'approcher d'un équipement traitant des informations classifiées de Défense à moins de 2m avec un autre appareil rayonnant (en France).
