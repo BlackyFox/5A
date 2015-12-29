@@ -298,6 +298,146 @@ int insert_lsb(JPEGimg *img){
 }
 
 
+int get_lsb(JPEGimg *img, char* filename){
+	unsigned char *message = NULL;
+	int file_size = 0;
+	int i = 0;
+	int retour, nb_dct;
+	unsigned long int tmp, randomV;
+	int comp, lin, col, pos;
+	unsigned long int* perm_array = NULL;
+	char filename2[100];
+	strcpy(filename2, filename);
+	strcat(filename2, ".txt");
+	FILE *filem = fopen(filename2, "w");
+
+	// Counting dct in img to know if insertion is possible
+	nb_dct = 0;
+	for(i=0; i<3; i++){
+		nb_dct += img->cinfo.comp_info[i].height_in_blocks *
+			img->cinfo.comp_info[i].width_in_blocks * 64;
+	}
+
+		// Get key
+	printf("Do you have an encryption key (0 for none)?\n");
+	int key = 0;
+	retour = scanf("%d", &key);
+
+	if(key != 0){
+		printf("KEY!!!!\n");
+		// random init
+		srand(key);
+
+		// Allocate permutation array
+		if((perm_array = malloc((nb_dct)*sizeof(unsigned long int))) ==
+		   NULL){
+			printf("Error allocating permutation array\n");
+			return 2;
+		}
+
+		// Filling array
+		for(i = 0; i < nb_dct; i++)
+			perm_array[i] = i;
+		
+		// Randomize array values
+		for(i = 0; i < nb_dct; i++){
+			randomV = rand()%nb_dct;
+			tmp = perm_array[i];
+			perm_array[i] = perm_array[randomV];
+			perm_array[randomV] = tmp;
+		}
+	}
+
+	char* msg[nb_dct];
+
+	for (i = 0; i < nb_dct; ++i)
+	{
+		msg[i]=0;
+	}
+
+	i = 0;
+	int value = 0;
+	int count = 0;
+	
+	// lsb replacing
+	for (comp=0; comp<img->cinfo.num_components; comp++){
+		for (lin=0; lin<img->cinfo.comp_info[comp].height_in_blocks; lin++){
+			for (col=0; col<img->cinfo.comp_info[comp].width_in_blocks; col++){
+				for (pos=1; pos<64; pos++){
+					count++;
+					// only message size
+					if(key != 0 && count == perm_array[i]){
+						if(i < nb_dct){
+							// last bit to 0
+							/*img->dctCoeffs[comp][lin][col][pos] &= 0xFFFFFFFE;
+							value = message[i/8];
+							value = (value >> (7-(i%8))) & 1;
+							img->dctCoeffs[comp][lin][col][pos] += value;*/
+
+							value = img->dctCoeffs[comp][lin][col][pos];
+							value = (value >> (7-(i%8))) & 1;
+							msg[i] += value;
+
+							i++;
+						}
+						// reset
+						comp = 0;
+						lin = 0;
+						col = 0;
+						pos = 1;
+					}
+					else{
+						if(i < 23*8){
+							// last bit to 0
+							/*img->dctCoeffs[comp][lin][col][pos] &= 0xFFFFFFFE;
+							value = message[i/8];
+							value = (value >> (7-(i%8))) & 1;
+							img->dctCoeffs[comp][lin][col][pos] += value;*/
+
+							value = img->dctCoeffs[comp][lin][col][pos];
+							//printf("Value before : %d\n", value);
+							value = (value >> (7-(i%8))) & 1;
+							msg[i] += value;
+							//printf("Value de %d = %d\n",i, value);
+							i++;
+						}
+					}
+					// All message has been inserted, nothing to do more
+					//if( i >= file_size*8)
+					//	break;
+				}
+			}
+		}
+	}
+	printf("Message:\n");
+	/*for(i = 0; i < nb_dct; i++)
+		//fwrite(filem, "%d", msg[i]);
+		printf("%d", msg[i]);*/
+	printf("\nMessage = \n");
+	for (i = 0; i < nb_dct; ++i){
+		//int val1 = (int)msg[i];
+		int j = i;
+		int val = 128*(int)msg[j]+64*(int)msg[j+1]+32*(int)msg[j+2]+16*(int)msg[j+3]+8*(int)msg[j+3]+4*(int)msg[j+4]+2*(int)msg[j+5]+1*(int)msg[j+6];
+		printf("%d ", val);
+		i+=7;
+	}
+	printf("\n\n\n");
+
+	for (i = 0; i < nb_dct; ++i){
+		//int val1 = (int)msg[i];
+		char c[8];
+		sprintf(c, "%d%d%d%d%d%d%d%d", msg[i], msg[i+1], msg[i+2], msg[i+3], msg[i+4], msg[i+5], msg[i+6], msg[i+7]);
+		//printf("%s\n", c);
+		char c2 = strtol(c, 0, 2);
+		printf("%c", c2);
+		fprintf(filem, "%c", c2);
+		i+=7;
+	}
+
+
+	return 0;
+}
+
 /******************** jpeg_write_from_coeffs() **************************
 Write a jpeg image from its DCT coeffs
 Returns EXIT_SUCCESS, 
@@ -345,6 +485,7 @@ jpeg_write_from_coeffs (char *outfile, JPEGimg *img)
 	jpeg_destroy_compress(&cinfo);
 	fclose (output);
 	
+	printf("%d\n", get_lsb(jpeg_read(outfile), outfile));
 	/*Done!*/
 	return EXIT_SUCCESS;
 }
@@ -391,7 +532,7 @@ int main (int argc, char ** argv)
 	return_value = jpeg_write_from_coeffs (argv[2],img);
 	if (return_value == EXIT_SUCCESS)
 		printf ("Image written in %s\n", argv[2]);	
-	
+
 	free_jpeg_img ( img );
 	
 	return EXIT_SUCCESS;
